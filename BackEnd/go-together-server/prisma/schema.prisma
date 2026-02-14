@@ -1,0 +1,276 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "./generated"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  fullName      String
+  password      String?
+  dateOfBirth   DateTime?
+  gender        Int?
+  status        UserStatus     @default(ACTIVE)
+  isVerified    Boolean        @default(false)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  googleId      String?        @unique
+  avatar        String         
+  devices       Device[]
+  expenseSplits ExpenseSplit[]
+  expenses      Expense[]      @relation("PaidBy")
+  notifications Notification[]
+  tripMembers   TripMember[]
+  userRoles     UserRole[]
+
+  @@map("users")
+}
+
+model Role {
+  id          Int              @id @default(autoincrement())
+  name        String           @unique
+  description String
+  permissions RolePermission[]
+  users       UserRole[]
+
+  @@map("roles")
+}
+
+model Permission {
+  id          Int              @id @default(autoincrement())
+  name        String           @unique
+  description String
+  roles       RolePermission[]
+
+  @@map("permissions")
+}
+
+model UserRole {
+  userId String
+  roleId Int
+  role   Role   @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+  @@index([roleId], map: "user_roles_roleId_fkey")
+  @@map("user_roles")
+}
+
+model RolePermission {
+  roleId       Int
+  permissionId Int
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@index([permissionId], map: "role_permissions_permissionId_fkey")
+  @@map("role_permissions")
+}
+
+model Trip {
+  id              String       @id @default(uuid())
+  name            String
+  destination     String
+  startDate       DateTime
+  endDate         DateTime
+  totalBudget     Decimal?     @db.Decimal(15, 2)
+  defaultCurrency String       @default("VND")
+  status          TripStatus   @default(UPCOMING)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  budgets         Budget[]
+  expenses        Expense[]
+  itineraries     Itinerary[]
+  members         TripMember[]
+
+  @@map("trips")
+}
+
+model TripMember {
+  id           String       @id @default(uuid())
+  tripId       String
+  userId       String
+  role         MemberRole   @default(MEMBER)
+  inviteStatus InviteStatus @default(PENDING)
+  joinedAt     DateTime?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  trip         Trip         @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([tripId, userId])
+  @@index([userId], map: "trip_members_userId_fkey")
+  @@map("trip_members")
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  name      String
+  icon      String?
+  color     String?
+  isDefault Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  budgets   Budget[]
+  expenses  Expense[]
+
+  @@map("categories")
+}
+
+model Expense {
+  id          String         @id @default(uuid())
+  tripId      String
+  amount      Decimal        @db.Decimal(15, 2)
+  currency    String         @default("VND")
+  categoryId  String
+  description String?
+  paidById    String
+  type        ExpenseType    @default(SHARED)
+  date        DateTime       @default(now())
+  receipt     String?
+  isConfirmed Boolean        @default(false)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  splits      ExpenseSplit[]
+  category    Category       @relation(fields: [categoryId], references: [id])
+  paidBy      User           @relation("PaidBy", fields: [paidById], references: [id])
+  trip        Trip           @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  @@index([categoryId], map: "expenses_categoryId_fkey")
+  @@index([paidById], map: "expenses_paidById_fkey")
+  @@index([tripId], map: "expenses_tripId_fkey")
+  @@map("expenses")
+}
+
+model ExpenseSplit {
+  id         String    @id @default(uuid())
+  expenseId  String
+  userId     String
+  amount     Decimal   @db.Decimal(15, 2)
+  percentage Decimal?  @db.Decimal(5, 2)
+  splitType  SplitType @default(EQUAL)
+  isPaid     Boolean   @default(false)
+  paidAt     DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  expense    Expense   @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  user       User      @relation(fields: [userId], references: [id])
+
+  @@unique([expenseId, userId])
+  @@index([userId], map: "expense_splits_userId_fkey")
+  @@map("expense_splits")
+}
+
+model Budget {
+  id         String    @id @default(uuid())
+  tripId     String
+  categoryId String?
+  amount     Decimal   @db.Decimal(15, 2)
+  spent      Decimal   @default(0.00) @db.Decimal(15, 2)
+  warningAt  Int       @default(80)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  category   Category? @relation(fields: [categoryId], references: [id])
+  trip       Trip      @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  @@unique([tripId, categoryId])
+  @@index([categoryId], map: "budgets_categoryId_fkey")
+  @@map("budgets")
+}
+
+model Itinerary {
+  id          String   @id @default(uuid())
+  tripId      String
+  date        DateTime
+  title       String
+  description String?  @db.Text
+  activities  Json?
+  photos      Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  trip        Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  @@index([tripId], map: "itineraries_tripId_fkey")
+  @@map("itineraries")
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  data      Json?
+  isRead    Boolean          @default(false)
+  readAt    DateTime?
+  createdAt DateTime         @default(now())
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "notifications_userId_fkey")
+  @@map("notifications")
+}
+
+model Device {
+  id           String   @id @default(uuid())
+  userId       String
+  fcmToken     String   @unique
+  deviceName   String?
+  deviceType   String?
+  isActive     Boolean  @default(true)
+  lastActiveAt DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "devices_userId_fkey")
+  @@map("devices")
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  BANNED
+}
+
+enum TripStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+  ARCHIVED
+}
+
+enum MemberRole {
+  OWNER
+  MEMBER
+}
+
+enum InviteStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum ExpenseType {
+  SHARED
+  PERSONAL
+}
+
+enum SplitType {
+  EQUAL
+  PERCENTAGE
+  AMOUNT
+}
+
+enum NotificationType {
+  TRIP_INVITE
+  MEMBER_JOINED
+  EXPENSE_CREATED
+  BUDGET_WARNING
+  SETTLEMENT_REMINDER
+  EXPENSE_REMINDER
+}
