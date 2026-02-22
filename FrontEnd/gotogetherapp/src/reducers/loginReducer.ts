@@ -1,8 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { access } from "node:fs";
-import { start } from "node:repl";
-import { setItem } from "../utils/storage";
-import { KEY_STORAGE } from "../constants/KeyStorage";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { setItem } from '../utils/storage';
+import { KEY_STORAGE } from '../constants/KeyStorage';
 
 type LoginState = {
   user: string;
@@ -11,13 +9,13 @@ type LoginState = {
 };
 
 const initialState: LoginState = {
-  user: "",
-  accessToken: "",
+  user: '',
+  accessToken: '',
   startDate: null,
 };
 
 export const LoginReducer = createSlice({
-  name: "login",
+  name: 'login',
   initialState,
   reducers: {
     login: (state, action) => {
@@ -33,9 +31,9 @@ export const LoginReducer = createSlice({
       };
     },
     logout: () => {
-      setItem(KEY_STORAGE.token, "");
-      setItem(KEY_STORAGE.user, "");
-      setItem(KEY_STORAGE.startDate, "");
+      setItem(KEY_STORAGE.token, '');
+      setItem(KEY_STORAGE.user, '');
+      setItem(KEY_STORAGE.startDate, '');
       return initialState;
     },
   },

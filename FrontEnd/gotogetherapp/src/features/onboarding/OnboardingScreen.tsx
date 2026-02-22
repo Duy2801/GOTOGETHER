@@ -98,25 +98,20 @@ const OnboardingScreen = () => {
         />
         <Button title={ONBOARDING_DATA[index].button} onPress={handleNext} />
 
-        {index === 0 && (
-          <View
-            style={{
-              paddingBottom: 30,
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Text>Đã có tài khoản? </Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate(SCREEN_NAME.LOGIN as never)}
-            >
-              <Text style={styles.loginRedirectText}>
-                {ONBOARDING_DATA[index].LoginRedirectText}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
+        <View style={styles.footerContainer}>
+          {index === 0 && (
+            <>
+              <Text>Đã có tài khoản? </Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate(SCREEN_NAME.LOGIN as never)}
+              >
+                <Text style={styles.loginRedirectText}>
+                  {ONBOARDING_DATA[index].LoginRedirectText}
+                </Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
       </View>
     </Body>
   );
@@ -125,6 +120,13 @@ const OnboardingScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  footerContainer: {
+    paddingBottom: 30,
+    minHeight: 60,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   dot: {
     width: 8,

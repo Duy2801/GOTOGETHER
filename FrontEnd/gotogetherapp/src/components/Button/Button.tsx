@@ -37,9 +37,10 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: SECONDARY_COLOR,
     padding: 20,
-    marginHorizontal: 30,
+    marginHorizontal: 18,
     marginBottom: 50,
     marginVertical: 20,
+    width: '90%',
   },
   text: {
     textAlign: 'center',

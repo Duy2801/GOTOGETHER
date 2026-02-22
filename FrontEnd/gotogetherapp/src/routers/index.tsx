@@ -7,6 +7,12 @@ import OnboardingScreen from '../features/onboarding/OnboardingScreen';
 import HomeScreen from '../features/home/HomeScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../features/auth/login/LoginScreen';
+import RegisterScreen from '../features/auth/register/RegisterScreen';
+import UpdateInfoScreen from '../features/profile/UpdateInfoScreen';
+import TabNavigator from './Tabs';
+import SpendingScreen from '../features/spending/SpedingScreen';
+import SettingScreen from '../features/setting/SettingScreen';
+import CelebrateScreen from '../features/celebrate/CelebrateScreen';
 const Stack = createNativeStackNavigator();
 
 function ApplicationNavigator() {
@@ -16,6 +22,12 @@ function ApplicationNavigator() {
     { name: SCREEN_NAME.ONBOARDING, component: OnboardingScreen },
     { name: SCREEN_NAME.HOME, component: HomeScreen },
     { name: SCREEN_NAME.LOGIN, component: LoginScreen },
+    { name: SCREEN_NAME.REGISTER, component: RegisterScreen },
+    { name: SCREEN_NAME.UPDATE_INFO, component: UpdateInfoScreen },
+    { name: SCREEN_NAME.TABS, component: TabNavigator },
+    { name: SCREEN_NAME.CELEBRATE, component: CelebrateScreen },
+    { name: SCREEN_NAME.SETTING, component: SettingScreen },
+    { name: SCREEN_NAME.SPENDING, component: SpendingScreen },
   ];
 
   return (

@@ -1,8 +1,17 @@
 export const SCREEN_NAME = {
   HOME: 'Home',
   LOGIN: 'Login',
-  SIGN_UP: 'SignUp',
+  REGISTER: 'Register',
   FORGOT_PASSWORD: 'ForgotPassword',
   SPLASH: 'Splash',
   ONBOARDING: 'Onboarding',
+  UPDATE_INFO: 'UpdateInfo',
+  TABS: 'Tabs',
+  HOME_TAB: 'HomeTab',
+  CELEBRATE_TAB: 'CelebrateTab',
+  CELEBRATE: 'Celebrate',
+  SETTING_TAB: 'SettingTab',
+  SETTING: 'Setting',
+  SPENDING_TAB: 'SpendingTab',
+  SPENDING: 'Spending',
 };
