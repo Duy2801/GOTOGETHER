@@ -111,15 +111,22 @@ const Header = (props: HeaderProps) => {
         );
   return (
     <View style={{ flexDirection: 'row' }}>
-      <View>
+      <View style={{ width: 30, paddingLeft: 10, justifyContent: 'center' }}>
         {typeof resolveHeaderLeft === 'function'
           ? resolveHeaderLeft({ navigation })
           : resolveHeaderLeft}
       </View>
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>{title}</Text>
+        <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center' }}>
+          {title}
+        </Text>
       </View>
       <View>
+        {typeof headerRight === 'function'
+          ? headerRight({ navigation, route })
+          : headerRight}
+      </View>
+      <View style={{ width: 30, alignItems: 'flex-end', paddingRight: 10 }}>
         {typeof headerRight === 'function'
           ? headerRight({ navigation, route })
           : headerRight}

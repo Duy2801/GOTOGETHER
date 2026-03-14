@@ -2,14 +2,21 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { setItem } from '../utils/storage';
 import { KEY_STORAGE } from '../constants/KeyStorage';
 
+interface User {
+  id: string;
+  email: string;
+  fullName: string;
+  avatar?: string;
+}
+
 type LoginState = {
-  user: string;
+  user: User | null;
   accessToken: string;
   startDate: string | null;
 };
 
 const initialState: LoginState = {
-  user: '',
+  user: null,
   accessToken: '',
   startDate: null,
 };

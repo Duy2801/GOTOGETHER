@@ -1,10 +1,410 @@
-import { Text, View } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
+  ActivityIndicator,
+  RefreshControl,
+  Alert,
+} from 'react-native';
+import { Image } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../reducers/store';
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../constants/color';
+import { Trip, tripApi } from './api';
+import TripCard from './components/TripCard';
+import EmptyTrips from './components/EmptyTrips';
+import TripFilter from './components/TripFilter';
+import { useNavigation } from '@react-navigation/native';
+import { HELLO, Notification } from '../../assets';
+import { SCREEN_NAME } from '../../constants/screenName';
+import AddTripScreen from './components/AddTripScreen';
+import SimpleFloatingButton from '../../components/SimpleFloatingButton';
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
+  const user = useSelector((state: RootState) => state.login.user);
+
+  const [trips, setTrips] = useState<Trip[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState('ALL');
+  const [showAddTrip, setShowAddTrip] = useState(false);
+  const [invitationActionTripId, setInvitationActionTripId] = useState<
+    string | null
+  >(null);
+
+  const fetchTrips = useCallback(async () => {
+    try {
+      setLoading(true);
+      const params = selectedFilter !== 'ALL' ? { status: selectedFilter } : {};
+      const response = await tripApi.getTrips(params);
+
+      if (response.status) {
+        setTrips(response.data.trips);
+      }
+    } catch (error: any) {
+      console.error('Error fetching trips:', error);
+      Alert.alert('Lỗi', error?.error || 'Không thể tải danh sách chuyến đi');
+    } finally {
+      setLoading(false);
+    }
+  }, [selectedFilter]);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await fetchTrips();
+    setRefreshing(false);
+  }, [fetchTrips]);
+
+  useEffect(() => {
+    fetchTrips();
+  }, [fetchTrips]);
+
+  const handleTripPress = (trip: Trip) => {
+    (navigation as any).navigate(SCREEN_NAME.TRIP_DETAIL, { tripId: trip.id });
+  };
+
+  const handleCreateTrip = () => {
+    setShowAddTrip(true);
+  };
+
+  const renderTripItem = ({ item }: { item: Trip }) => (
+    <TripCard trip={item} onPress={handleTripPress} />
+  );
+
+  const getCurrentInviteStatus = (trip: Trip) => {
+    if (!trip.members || trip.members.length === 0) {
+      return 'ACCEPTED';
+    }
+    return trip.members[0].inviteStatus;
+  };
+
+  const acceptedTrips = trips.filter(
+    trip => getCurrentInviteStatus(trip) === 'ACCEPTED',
+  );
+
+  const pendingTrips = trips.filter(
+    trip => getCurrentInviteStatus(trip) === 'PENDING',
+  );
+
+  const handleRespondInvitation = async (
+    tripId: string,
+    status: 'ACCEPTED' | 'REJECTED',
+  ) => {
+    try {
+      setInvitationActionTripId(tripId);
+      const response = await tripApi.respondInvitation(tripId, { status });
+
+      if (response.status) {
+        Alert.alert(
+          'Thành công',
+          status === 'ACCEPTED'
+            ? 'Bạn đã tham gia chuyến đi.'
+            : 'Bạn đã từ chối lời mời chuyến đi.',
+        );
+      }
+
+      await fetchTrips();
+    } catch (error: any) {
+      Alert.alert(
+        'Lỗi',
+        error?.error ||
+          error?.message ||
+          'Không thể cập nhật phản hồi lời mời. Vui lòng thử lại.',
+      );
+    } finally {
+      setInvitationActionTripId(null);
+    }
+  };
+
+  const renderEmptyState = () => {
+    if (loading) return null;
+    return <EmptyTrips onCreateTrip={handleCreateTrip} />;
+  };
+  const hasTrips = acceptedTrips.length > 0;
   return (
-    <View>
-      <Text>HomeScreen</Text>
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Image source={{ uri: user?.avatar }} style={styles.avatar} />
+        <View style={styles.textContainer}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 4,
+            }}
+          >
+            <Text style={styles.greetingText}>Xin chào</Text>
+            <Image source={HELLO.HELLO} style={{ height: 15, width: 15 }} />
+          </View>
+          <Text style={styles.userName}>{user?.fullName || 'Người dùng'}</Text>
+        </View>
+        <TouchableOpacity onPress={() => console.log('Notifications')}>
+          <Image
+            source={Notification.NOTIFI}
+            style={{ width: 20, height: 20 }}
+          />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.bodyContainer}>
+        <View style={styles.tabBar}>
+          <Text style={styles.sectionTitle}>Hành trình</Text>
+          <TouchableOpacity
+            style={styles.calendarButton}
+            onPress={() =>
+              Alert.alert('Lọc theo thời gian', 'Tính năng đang phát triển')
+            }
+          >
+            <Text style={styles.calendarIcon}>📅</Text>
+          </TouchableOpacity>
+        </View>
+        <TripFilter
+          selectedFilter={selectedFilter}
+          onFilterChange={setSelectedFilter}
+        />
+
+        {pendingTrips.length > 0 && (
+          <View style={styles.inviteSection}>
+            <Text style={styles.inviteSectionTitle}>Lời mời chuyến đi</Text>
+            {pendingTrips.map(trip => {
+              const isActing = invitationActionTripId === trip.id;
+              return (
+                <View key={trip.id} style={styles.inviteCard}>
+                  <View>
+                    {trip.images ? (
+                      <View style={styles.inviteImageContainer}>
+                        <Image
+                          source={{ uri: trip.images }}
+                          style={styles.inviteImage}
+                          resizeMode="cover"
+                        />
+                      </View>
+                    ) : null}
+                    <Text style={styles.inviteTripName} numberOfLines={1}>
+                      {trip.name}
+                    </Text>
+                    <Text style={styles.inviteDateText}>
+                      {new Date(trip.startDate).toLocaleDateString('vi-VN')} -{' '}
+                      {new Date(trip.endDate).toLocaleDateString('vi-VN')}
+                    </Text>
+                  </View>
+
+                  <View style={styles.inviteActions}>
+                    <TouchableOpacity
+                      style={styles.rejectButton}
+                      onPress={() =>
+                        handleRespondInvitation(trip.id, 'REJECTED')
+                      }
+                      disabled={isActing}
+                    >
+                      <Text style={styles.rejectButtonText}>Từ chối</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.acceptButton}
+                      onPress={() =>
+                        handleRespondInvitation(trip.id, 'ACCEPTED')
+                      }
+                      disabled={isActing}
+                    >
+                      {isActing ? (
+                        <ActivityIndicator size="small" color="white" />
+                      ) : (
+                        <Text style={styles.acceptButtonText}>Chấp nhận</Text>
+                      )}
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+        )}
+
+        {loading && !refreshing ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color={PRIMARY_COLOR} />
+          </View>
+        ) : (
+          <FlatList
+            data={acceptedTrips}
+            renderItem={renderTripItem}
+            keyExtractor={item => item.id}
+            contentContainerStyle={styles.listContent}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={renderEmptyState}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={[PRIMARY_COLOR]}
+              />
+            }
+          />
+        )}
+      </View>
+      <SimpleFloatingButton
+        onPress={handleCreateTrip}
+        icon="+"
+        backgroundColor={SECONDARY_COLOR}
+        size={56}
+        bottom={20}
+        right={20}
+        position="right"
+      />
+      <AddTripScreen
+        visible={showAddTrip}
+        onClose={() => setShowAddTrip(false)}
+        onSuccess={fetchTrips}
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: PRIMARY_COLOR,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+  },
+  avatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+  },
+  textContainer: {
+    marginLeft: 12,
+    flex: 1,
+  },
+  greetingText: {
+    fontFamily: 'DancingScript-Regular',
+    fontSize: 18,
+    color: SECONDARY_COLOR,
+  },
+  userName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginTop: 2,
+  },
+  notificationIcon: {
+    fontSize: 24,
+  },
+  bodyContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+  },
+  tabBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    paddingTop: 4,
+    paddingBottom: 4,
+  },
+  sectionTitle: {
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  calendarButton: {
+    padding: 4,
+  },
+  calendarIcon: {
+    fontSize: 20,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  listContent: {
+    paddingTop: 12,
+    paddingBottom: 20,
+  },
+  inviteSection: {
+    marginTop: 12,
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 12,
+  },
+  inviteSectionTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 8,
+  },
+  inviteCard: {
+    backgroundColor: '#F6FAF7',
+    borderWidth: 1,
+    borderColor: '#DDE9DF',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 8,
+  },
+  inviteImageContainer: {
+    width: '100%',
+    height: 140,
+    borderRadius: 8,
+    overflow: 'hidden',
+    backgroundColor: '#E9EEF0',
+    marginBottom: 8,
+  },
+  inviteTripName: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#222',
+  },
+  inviteImage: {
+    width: '100%',
+    height: '100%',
+  },
+  inviteDateText: {
+    marginTop: 4,
+    fontSize: 13,
+    color: '#667085',
+  },
+  inviteActions: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: 8,
+  },
+  acceptButton: {
+    backgroundColor: SECONDARY_COLOR,
+    borderRadius: 8,
+    minWidth: 96,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  acceptButtonText: {
+    color: 'white',
+    fontWeight: '700',
+  },
+  rejectButton: {
+    borderWidth: 1,
+    borderColor: '#D0D5DD',
+    borderRadius: 8,
+    minWidth: 96,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
+  rejectButtonText: {
+    color: '#344054',
+    fontWeight: '700',
+  },
+});
+
 export default HomeScreen;

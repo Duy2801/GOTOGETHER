@@ -16,10 +16,10 @@
  */
 
 import * as runtime from "@prisma/client/runtime/client"
-import type * as Prisma from "../models.ts"
-import { type PrismaClient } from "./class.ts"
+import type * as Prisma from "../models.js"
+import { type PrismaClient } from "./class.js"
 
-export type * from '../models.ts'
+export type * from '../models.js'
 
 export type DMMF = typeof runtime.DMMF
 
@@ -397,7 +397,9 @@ export const ModelName = {
   Budget: 'Budget',
   Itinerary: 'Itinerary',
   Notification: 'Notification',
-  Device: 'Device'
+  Device: 'Device',
+  Celebrate: 'Celebrate',
+  CelebrateImage: 'CelebrateImage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -413,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "role" | "permission" | "userRole" | "rolePermission" | "trip" | "tripMember" | "category" | "expense" | "expenseSplit" | "budget" | "itinerary" | "notification" | "device"
+    modelProps: "user" | "role" | "permission" | "userRole" | "rolePermission" | "trip" | "tripMember" | "category" | "expense" | "expenseSplit" | "budget" | "itinerary" | "notification" | "device" | "celebrate" | "celebrateImage"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1341,6 +1343,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Celebrate: {
+      payload: Prisma.$CelebratePayload<ExtArgs>
+      fields: Prisma.CelebrateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CelebrateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebratePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CelebrateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebratePayload>
+        }
+        findFirst: {
+          args: Prisma.CelebrateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebratePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CelebrateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebratePayload>
+        }
+        findMany: {
+          args: Prisma.CelebrateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebratePayload>[]
+        }
+        create: {
+          args: Prisma.CelebrateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebratePayload>
+        }
+        createMany: {
+          args: Prisma.CelebrateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.CelebrateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebratePayload>
+        }
+        update: {
+          args: Prisma.CelebrateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebratePayload>
+        }
+        deleteMany: {
+          args: Prisma.CelebrateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CelebrateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.CelebrateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebratePayload>
+        }
+        aggregate: {
+          args: Prisma.CelebrateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCelebrate>
+        }
+        groupBy: {
+          args: Prisma.CelebrateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CelebrateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CelebrateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CelebrateCountAggregateOutputType> | number
+        }
+      }
+    }
+    CelebrateImage: {
+      payload: Prisma.$CelebrateImagePayload<ExtArgs>
+      fields: Prisma.CelebrateImageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CelebrateImageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrateImagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CelebrateImageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrateImagePayload>
+        }
+        findFirst: {
+          args: Prisma.CelebrateImageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrateImagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CelebrateImageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrateImagePayload>
+        }
+        findMany: {
+          args: Prisma.CelebrateImageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrateImagePayload>[]
+        }
+        create: {
+          args: Prisma.CelebrateImageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrateImagePayload>
+        }
+        createMany: {
+          args: Prisma.CelebrateImageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.CelebrateImageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrateImagePayload>
+        }
+        update: {
+          args: Prisma.CelebrateImageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrateImagePayload>
+        }
+        deleteMany: {
+          args: Prisma.CelebrateImageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CelebrateImageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.CelebrateImageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrateImagePayload>
+        }
+        aggregate: {
+          args: Prisma.CelebrateImageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCelebrateImage>
+        }
+        groupBy: {
+          args: Prisma.CelebrateImageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CelebrateImageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CelebrateImageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CelebrateImageCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1435,14 +1569,13 @@ export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnu
 export const TripScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  destination: 'destination',
   startDate: 'startDate',
   endDate: 'endDate',
   totalBudget: 'totalBudget',
-  defaultCurrency: 'defaultCurrency',
   status: 'status',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  images: 'images'
 } as const
 
 export type TripScalarFieldEnum = (typeof TripScalarFieldEnum)[keyof typeof TripScalarFieldEnum]
@@ -1556,17 +1689,38 @@ export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[k
 
 export const DeviceScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
+  deviceId: 'deviceId',
   fcmToken: 'fcmToken',
-  deviceName: 'deviceName',
-  deviceType: 'deviceType',
-  isActive: 'isActive',
-  lastActiveAt: 'lastActiveAt',
+  userId: 'userId',
+  platform: 'platform',
+  locale: 'locale',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type DeviceScalarFieldEnum = (typeof DeviceScalarFieldEnum)[keyof typeof DeviceScalarFieldEnum]
+
+
+export const CelebrateScalarFieldEnum = {
+  id: 'id',
+  tripId: 'tripId',
+  userId: 'userId',
+  description: 'description',
+  date: 'date',
+  createdAt: 'createdAt'
+} as const
+
+export type CelebrateScalarFieldEnum = (typeof CelebrateScalarFieldEnum)[keyof typeof CelebrateScalarFieldEnum]
+
+
+export const CelebrateImageScalarFieldEnum = {
+  id: 'id',
+  celebrateId: 'celebrateId',
+  imageUrl: 'imageUrl',
+  createdAt: 'createdAt'
+} as const
+
+export type CelebrateImageScalarFieldEnum = (typeof CelebrateImageScalarFieldEnum)[keyof typeof CelebrateImageScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1631,8 +1785,7 @@ export type UserRoleOrderByRelevanceFieldEnum = (typeof UserRoleOrderByRelevance
 export const TripOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
-  destination: 'destination',
-  defaultCurrency: 'defaultCurrency'
+  images: 'images'
 } as const
 
 export type TripOrderByRelevanceFieldEnum = (typeof TripOrderByRelevanceFieldEnum)[keyof typeof TripOrderByRelevanceFieldEnum]
@@ -1726,14 +1879,33 @@ export type NotificationOrderByRelevanceFieldEnum = (typeof NotificationOrderByR
 
 
 export const DeviceOrderByRelevanceFieldEnum = {
-  id: 'id',
-  userId: 'userId',
+  deviceId: 'deviceId',
   fcmToken: 'fcmToken',
-  deviceName: 'deviceName',
-  deviceType: 'deviceType'
+  userId: 'userId',
+  platform: 'platform',
+  locale: 'locale'
 } as const
 
 export type DeviceOrderByRelevanceFieldEnum = (typeof DeviceOrderByRelevanceFieldEnum)[keyof typeof DeviceOrderByRelevanceFieldEnum]
+
+
+export const CelebrateOrderByRelevanceFieldEnum = {
+  id: 'id',
+  tripId: 'tripId',
+  userId: 'userId',
+  description: 'description'
+} as const
+
+export type CelebrateOrderByRelevanceFieldEnum = (typeof CelebrateOrderByRelevanceFieldEnum)[keyof typeof CelebrateOrderByRelevanceFieldEnum]
+
+
+export const CelebrateImageOrderByRelevanceFieldEnum = {
+  id: 'id',
+  celebrateId: 'celebrateId',
+  imageUrl: 'imageUrl'
+} as const
+
+export type CelebrateImageOrderByRelevanceFieldEnum = (typeof CelebrateImageOrderByRelevanceFieldEnum)[keyof typeof CelebrateImageOrderByRelevanceFieldEnum]
 
 
 
@@ -1955,6 +2127,8 @@ export type GlobalOmitConfig = {
   itinerary?: Prisma.ItineraryOmit
   notification?: Prisma.NotificationOmit
   device?: Prisma.DeviceOmit
+  celebrate?: Prisma.CelebrateOmit
+  celebrateImage?: Prisma.CelebrateImageOmit
 }
 
 /* Types for Logging */

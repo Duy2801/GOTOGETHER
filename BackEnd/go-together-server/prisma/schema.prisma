@@ -11,7 +11,7 @@ datasource db {
 model User {
   id            String         @id @default(uuid())
   email         String         @unique
-  fullName      String
+  fullName      String?
   password      String?
   dateOfBirth   DateTime?
   gender        Int?
@@ -20,13 +20,14 @@ model User {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   googleId      String?        @unique
-  avatar        String         
+  avatar        String?         
   devices       Device[]
   expenseSplits ExpenseSplit[]
   expenses      Expense[]      @relation("PaidBy")
   notifications Notification[]
   tripMembers   TripMember[]
   userRoles     UserRole[]
+  celebrates    Celebrate[]
 
   @@map("users")
 }
@@ -75,11 +76,9 @@ model RolePermission {
 model Trip {
   id              String       @id @default(uuid())
   name            String
-  destination     String
   startDate       DateTime
   endDate         DateTime
   totalBudget     Decimal?     @db.Decimal(15, 2)
-  defaultCurrency String       @default("VND")
   status          TripStatus   @default(UPCOMING)
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
@@ -87,6 +86,8 @@ model Trip {
   expenses        Expense[]
   itineraries     Itinerary[]
   members         TripMember[]
+  celebrates      Celebrate[]
+  images      String?
 
   @@map("trips")
 }
@@ -216,19 +217,45 @@ model Notification {
 }
 
 model Device {
-  id           String   @id @default(uuid())
-  userId       String
-  fcmToken     String   @unique
-  deviceName   String?
-  deviceType   String?
-  isActive     Boolean  @default(true)
-  lastActiveAt DateTime @default(now())
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        Int      @id @default(autoincrement())
+  deviceId  String
+  fcmToken  String
+  userId    String
+  platform  String?
+  locale    String?
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@index([userId], map: "devices_userId_fkey")
   @@map("devices")
+}
+
+model Celebrate {
+  id          String   @id @default(uuid())
+  tripId      String
+  userId      String
+  description String?  @db.Text
+  date        DateTime
+  createdAt   DateTime @default(now())
+
+  trip        Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  images      CelebrateImage[]
+
+  @@map("celebrates")
+}
+
+model CelebrateImage {
+  id          String    @id @default(uuid())
+  celebrateId String
+  imageUrl    String
+  createdAt   DateTime  @default(now())
+
+  celebrate   Celebrate @relation(fields: [celebrateId], references: [id], onDelete: Cascade)
+
+  @@index([celebrateId])
+  @@map("celebrate_images")
 }
 
 enum UserStatus {
@@ -274,3 +301,4 @@ enum NotificationType {
   SETTLEMENT_REMINDER
   EXPENSE_REMINDER
 }
+

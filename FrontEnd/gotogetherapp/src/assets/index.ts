@@ -32,3 +32,25 @@ export const ICONTAB = {
   SPENDING: require('./iconTab/spending.png'),
   SETTING: require('./iconTab/settings.png'),
 };
+
+export const Notification = {
+  NOTIFI: {
+    uri: 'https://res.cloudinary.com/dvsuhb9cj/image/upload/v1772611401/Notification_l7b95k.png',
+  },
+};
+
+export const LOCATED = {
+  LOCATED: {
+    uri: 'https://res.cloudinary.com/dvsuhb9cj/image/upload/v1772612620/minimap_ysaply.png',
+  },
+};
+export const HELLO = {
+  HELLO: {
+    uri: 'https://res.cloudinary.com/dvsuhb9cj/image/upload/v1772613921/hello_wkjwvr.png',
+  },
+};
+export const AVARTAEMAIL = {
+  AVATA: {
+    uri: 'https://res.cloudinary.com/dvsuhb9cj/image/upload/v1773323107/avatarEmail_riwbpf.png',
+  },
+};

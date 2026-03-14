@@ -1,0 +1,49 @@
+import { PrismaService } from "src/prisma/prisma.service";
+import { TripDetailResponseDto } from "./dto/trip-detail-reponse";
+import { CreateTripDTO } from "./dto/create-trip-dto";
+import { tripAmountQuantityResponse } from "./dto/trip-amoutQuantity-reponse";
+export declare class TripService {
+    private prisma;
+    constructor(prisma: PrismaService);
+    getAllTrip(userId: string, query: {
+        status?: string;
+        page: number;
+        limit: number;
+    }): Promise<{
+        trips: ({
+            members: {
+                role: import("prisma/generated/enums").MemberRole;
+                inviteStatus: import("prisma/generated/enums").InviteStatus;
+            }[];
+            _count: {
+                members: number;
+            };
+        } & {
+            id: string;
+            name: string;
+            startDate: Date;
+            endDate: Date;
+            totalBudget: import("@prisma/client-runtime-utils").Decimal | null;
+            status: import("prisma/generated/enums").TripStatus;
+            createdAt: Date;
+            updatedAt: Date;
+            images: string | null;
+        })[];
+        total: number;
+        page: number;
+        limit: number;
+    }>;
+    getTripDetail(tripId: string): Promise<TripDetailResponseDto>;
+    createTrip(userId: string, data: CreateTripDTO): Promise<{
+        id: string;
+        name: string;
+        startDate: Date;
+        endDate: Date;
+        totalBudget: import("@prisma/client-runtime-utils").Decimal | null;
+        status: import("prisma/generated/enums").TripStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        images: string | null;
+    }>;
+    getTotalAmoutAndQuantity(userId: string): Promise<tripAmountQuantityResponse>;
+}

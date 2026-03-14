@@ -13,6 +13,8 @@ import TabNavigator from './Tabs';
 import SpendingScreen from '../features/spending/SpedingScreen';
 import SettingScreen from '../features/setting/SettingScreen';
 import CelebrateScreen from '../features/celebrate/CelebrateScreen';
+import { TripDetailScreen, AddExpenseScreen } from '../features/tripdetail';
+import AddTripScreen from '../features/home/components/AddTripScreen';
 const Stack = createNativeStackNavigator();
 
 function ApplicationNavigator() {
@@ -28,6 +30,17 @@ function ApplicationNavigator() {
     { name: SCREEN_NAME.CELEBRATE, component: CelebrateScreen },
     { name: SCREEN_NAME.SETTING, component: SettingScreen },
     { name: SCREEN_NAME.SPENDING, component: SpendingScreen },
+    { name: SCREEN_NAME.TRIP_DETAIL, component: TripDetailScreen },
+    {
+      name: SCREEN_NAME.ADD_EXPENSE,
+      component: AddExpenseScreen,
+      options: {
+        presentation: 'transparentModal',
+        animation: 'fade',
+        contentStyle: { backgroundColor: 'transparent' },
+      },
+    },
+    { name: SCREEN_NAME.ADD_TRIP, component: AddTripScreen },
   ];
 
   return (
@@ -38,7 +51,7 @@ function ApplicationNavigator() {
             key={item.name}
             name={item.name}
             component={item.component}
-            options={{ headerShown: false }}
+            options={{ headerShown: false, ...(item as any).options }}
           />
         ))}
       </Stack.Navigator>

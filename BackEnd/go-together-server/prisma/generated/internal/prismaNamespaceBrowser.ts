@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models.ts'
-export type * from './prismaNamespace.ts'
+export type * from '../models.js'
+export type * from './prismaNamespace.js'
 
 export const Decimal = runtime.Decimal
 
@@ -64,7 +64,9 @@ export const ModelName = {
   Budget: 'Budget',
   Itinerary: 'Itinerary',
   Notification: 'Notification',
-  Device: 'Device'
+  Device: 'Device',
+  Celebrate: 'Celebrate',
+  CelebrateImage: 'CelebrateImage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -138,14 +140,13 @@ export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnu
 export const TripScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  destination: 'destination',
   startDate: 'startDate',
   endDate: 'endDate',
   totalBudget: 'totalBudget',
-  defaultCurrency: 'defaultCurrency',
   status: 'status',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  images: 'images'
 } as const
 
 export type TripScalarFieldEnum = (typeof TripScalarFieldEnum)[keyof typeof TripScalarFieldEnum]
@@ -259,17 +260,38 @@ export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[k
 
 export const DeviceScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
+  deviceId: 'deviceId',
   fcmToken: 'fcmToken',
-  deviceName: 'deviceName',
-  deviceType: 'deviceType',
-  isActive: 'isActive',
-  lastActiveAt: 'lastActiveAt',
+  userId: 'userId',
+  platform: 'platform',
+  locale: 'locale',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type DeviceScalarFieldEnum = (typeof DeviceScalarFieldEnum)[keyof typeof DeviceScalarFieldEnum]
+
+
+export const CelebrateScalarFieldEnum = {
+  id: 'id',
+  tripId: 'tripId',
+  userId: 'userId',
+  description: 'description',
+  date: 'date',
+  createdAt: 'createdAt'
+} as const
+
+export type CelebrateScalarFieldEnum = (typeof CelebrateScalarFieldEnum)[keyof typeof CelebrateScalarFieldEnum]
+
+
+export const CelebrateImageScalarFieldEnum = {
+  id: 'id',
+  celebrateId: 'celebrateId',
+  imageUrl: 'imageUrl',
+  createdAt: 'createdAt'
+} as const
+
+export type CelebrateImageScalarFieldEnum = (typeof CelebrateImageScalarFieldEnum)[keyof typeof CelebrateImageScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -334,8 +356,7 @@ export type UserRoleOrderByRelevanceFieldEnum = (typeof UserRoleOrderByRelevance
 export const TripOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
-  destination: 'destination',
-  defaultCurrency: 'defaultCurrency'
+  images: 'images'
 } as const
 
 export type TripOrderByRelevanceFieldEnum = (typeof TripOrderByRelevanceFieldEnum)[keyof typeof TripOrderByRelevanceFieldEnum]
@@ -429,12 +450,31 @@ export type NotificationOrderByRelevanceFieldEnum = (typeof NotificationOrderByR
 
 
 export const DeviceOrderByRelevanceFieldEnum = {
-  id: 'id',
-  userId: 'userId',
+  deviceId: 'deviceId',
   fcmToken: 'fcmToken',
-  deviceName: 'deviceName',
-  deviceType: 'deviceType'
+  userId: 'userId',
+  platform: 'platform',
+  locale: 'locale'
 } as const
 
 export type DeviceOrderByRelevanceFieldEnum = (typeof DeviceOrderByRelevanceFieldEnum)[keyof typeof DeviceOrderByRelevanceFieldEnum]
+
+
+export const CelebrateOrderByRelevanceFieldEnum = {
+  id: 'id',
+  tripId: 'tripId',
+  userId: 'userId',
+  description: 'description'
+} as const
+
+export type CelebrateOrderByRelevanceFieldEnum = (typeof CelebrateOrderByRelevanceFieldEnum)[keyof typeof CelebrateOrderByRelevanceFieldEnum]
+
+
+export const CelebrateImageOrderByRelevanceFieldEnum = {
+  id: 'id',
+  celebrateId: 'celebrateId',
+  imageUrl: 'imageUrl'
+} as const
+
+export type CelebrateImageOrderByRelevanceFieldEnum = (typeof CelebrateImageOrderByRelevanceFieldEnum)[keyof typeof CelebrateImageOrderByRelevanceFieldEnum]
 

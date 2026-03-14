@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   StyleSheet,
   Text,
@@ -12,16 +13,102 @@ import React from 'react';
 import Button from '../../../components/Button/Button';
 import { useNavigation } from '@react-navigation/native';
 import { SCREEN_NAME } from '../../../constants/screenName';
+import Toast from 'react-native-toast-message';
+import { apiLogin } from './api';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../reducers/loginReducer';
+import { ApiError } from '../../../api';
 
 const LoginScreen = () => {
   const navigation = useNavigation<any>();
   const [showPassword, setShowPassword] = React.useState(false);
+  const [email, setEmail] = React.useState('user1@gotogether.com');
+  const [password, setPassword] = React.useState('password123');
+
+  const dispatch = useDispatch();
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-  const handleLogin = () => {
-    navigation.navigate(SCREEN_NAME.UPDATE_INFO);
+
+  const validate = () => {
+    if (!email) {
+      Toast.show({ type: 'error', text1: 'Vui lòng nhập email' });
+      return false;
+    }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      Toast.show({ type: 'error', text1: 'Email không hợp lệ' });
+      return false;
+    }
+    if (!password) {
+      Toast.show({ type: 'error', text1: 'Vui lòng nhập mật khẩu' });
+      return false;
+    }
+    if (password.length < 6) {
+      Toast.show({
+        type: 'error',
+        text1: 'Mật khẩu phải có ít nhất 6 ký tự',
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const handleLogin = async () => {
+    if (!validate()) {
+      return;
+    }
+    try {
+      const response = await apiLogin({ email, password });
+
+      if (response.status) {
+        Toast.show({ type: 'success', text1: 'Đăng nhập thành công' });
+        dispatch(
+          login({
+            user: response.data.user,
+            accessToken: response.data.accessToken,
+            startDate: response.data.startDate,
+          }),
+        );
+
+        const user = response.data.user;
+
+        const isInfoComplete = checkInfoUser(user);
+
+        setTimeout(() => {
+          if (isInfoComplete) {
+            navigation.navigate(SCREEN_NAME.TABS);
+          } else {
+            navigation.navigate(SCREEN_NAME.UPDATE_INFO);
+          }
+        }, 300);
+      } else {
+        Toast.show({
+          type: 'warning',
+          text1: 'Response không có status',
+        });
+      }
+    } catch (error) {
+      const err = error as ApiError;
+      Toast.show({
+        type: 'error',
+        text1: err.message || 'Đăng nhập thất bại',
+      });
+    }
+  };
+  const checkInfoUser = (user: any) => {
+    const requiredFields = ['fullName', 'dateOfBirth', 'gender'];
+
+    return requiredFields.every(field => {
+      const value = user[field];
+      if (value === null || value === undefined) {
+        return false;
+      }
+      if (typeof value === 'string' && value.trim() === '') {
+        return false;
+      }
+      return true;
+    });
   };
   return (
     <Body hideHeader>
@@ -40,12 +127,16 @@ const LoginScreen = () => {
           <TextInput
             style={styles.input}
             placeholder="Email"
+            value={email}
+            onChangeText={e => setEmail(e)}
             // placeholderTextColor={'black'}
           />
           <View style={styles.containerPassword}>
             <TextInput
               style={styles.inputPassword}
               placeholder="Mật khẩu"
+              value={password}
+              onChangeText={e => setPassword(e)}
               secureTextEntry={!showPassword}
             />
 
