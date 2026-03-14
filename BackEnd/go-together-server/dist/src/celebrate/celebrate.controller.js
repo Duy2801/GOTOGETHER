@@ -17,13 +17,21 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const celebrate_service_1 = require("./celebrate.service");
 const jwt_auth_guard_1 = require("./guards/jwt-auth.guard");
+const celebrate_dto_1 = require("./dto/celebrate.dto");
+const update_celebrate_dto_1 = require("./dto/update-celebrate.dto");
 let CelebrateController = class CelebrateController {
     celebrateService;
     constructor(celebrateService) {
         this.celebrateService = celebrateService;
     }
     getAllCelebration(req) {
-        return this.celebrateService.getAllCelebrate(req.user.id);
+        return this.celebrateService.getAllCelebrate(req.user.userId);
+    }
+    createCelebrate(req, dto) {
+        return this.celebrateService.createCelebrate(req.user.userId, dto);
+    }
+    updateCelebrate(req, celebrateId, dto) {
+        return this.celebrateService.updateCelebrate(celebrateId, req.user.userId, dto);
     }
 };
 exports.CelebrateController = CelebrateController;
@@ -39,6 +47,33 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], CelebrateController.prototype, "getAllCelebration", null);
+__decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.Post)(),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiOperation)({
+        summary: "Tạo kỷ niệm mới",
+    }),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, celebrate_dto_1.CreateCelebrateDTO]),
+    __metadata("design:returntype", void 0)
+], CelebrateController.prototype, "createCelebrate", null);
+__decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.Put)(":celebrateId"),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiOperation)({
+        summary: "Cập nhật kỷ niệm",
+    }),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)("celebrateId")),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, update_celebrate_dto_1.UpdateCelebrateDTO]),
+    __metadata("design:returntype", void 0)
+], CelebrateController.prototype, "updateCelebrate", null);
 exports.CelebrateController = CelebrateController = __decorate([
     (0, swagger_1.ApiTags)("Celebrate"),
     (0, common_1.Controller)("celebrate"),

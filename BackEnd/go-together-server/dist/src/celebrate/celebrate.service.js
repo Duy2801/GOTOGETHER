@@ -18,7 +18,7 @@ let CelebrateService = class CelebrateService {
         this.prisma = prisma;
     }
     async getAllCelebrate(userId) {
-        const celebrate = this.prisma.celebrate.findFirst({
+        const celebrate = this.prisma.celebrate.findMany({
             where: { userId },
             include: {
                 trip: {
@@ -38,20 +38,22 @@ let CelebrateService = class CelebrateService {
                         avatar: true,
                     },
                 },
+                images: true,
             },
-            orderBy: { date: "asc" },
+            orderBy: { date: "desc" },
         });
         return celebrate;
     }
     async createCelebrate(userId, data) {
+        const imageList = Array.isArray(data.images) ? data.images : [];
         const celebrate = await this.prisma.celebrate.create({
             data: {
                 userId,
                 tripId: data.tripId,
                 description: data.description,
-                date: data.date,
+                date: new Date(data.date),
                 images: {
-                    create: data.images.map((img) => ({
+                    create: imageList.map((img) => ({
                         imageUrl: img,
                     })),
                 },

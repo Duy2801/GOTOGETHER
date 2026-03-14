@@ -26,7 +26,7 @@ __decorate([
 ], CreateCelebrateDTO.prototype, "tripId", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: "2026-04-01" }),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsDateString)(),
     __metadata("design:type", String)
 ], CreateCelebrateDTO.prototype, "date", void 0);
 __decorate([
@@ -35,8 +35,10 @@ __decorate([
     __metadata("design:type", String)
 ], CreateCelebrateDTO.prototype, "description", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: "" }),
-    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({ example: ["https://.../image.jpg"], required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.IsString)({ each: true }),
     __metadata("design:type", Array)
 ], CreateCelebrateDTO.prototype, "images", void 0);
 //# sourceMappingURL=celebrate.dto.js.map

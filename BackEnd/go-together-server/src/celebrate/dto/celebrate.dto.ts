@@ -1,6 +1,5 @@
-import {} from "@nestjs/common";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString } from "class-validator";
+import { IsArray, IsDateString, IsOptional, IsString } from "class-validator";
 
 export class CreateCelebrateDTO {
   @ApiProperty({ example: "trip-uuid" })
@@ -8,14 +7,16 @@ export class CreateCelebrateDTO {
   tripId: string;
 
   @ApiProperty({ example: "2026-04-01" })
-  @IsString()
+  @IsDateString()
   date: string;
 
   @ApiProperty({ example: "Tuyet voi " })
   @IsString()
   description: string;
 
-  @ApiProperty({ example: "" })
-  @IsString()
-  images: string[];
+  @ApiProperty({ example: ["https://.../image.jpg"], required: false })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  images?: string[];
 }

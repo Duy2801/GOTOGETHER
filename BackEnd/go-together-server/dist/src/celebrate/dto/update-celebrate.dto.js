@@ -33,7 +33,8 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.IsString)({ each: true }),
     __metadata("design:type", Array)
 ], UpdateCelebrateDTO.prototype, "images", void 0);
 //# sourceMappingURL=update-celebrate.dto.js.map

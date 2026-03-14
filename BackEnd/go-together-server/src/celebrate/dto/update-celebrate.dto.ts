@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDateString, IsOptional, IsString } from "class-validator";
+import { IsArray, IsDateString, IsOptional, IsString } from "class-validator";
 
 export class UpdateCelebrateDTO {
   @ApiProperty({ example: "2026-04-02" })
@@ -14,6 +14,7 @@ export class UpdateCelebrateDTO {
 
   @ApiProperty()
   @IsOptional()
-  @IsString()
-  images: string[];
+  @IsArray()
+  @IsString({ each: true })
+  images?: string[];
 }

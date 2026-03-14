@@ -12,7 +12,7 @@ export class CelebrateService {
   constructor(private prisma: PrismaService) {}
 
   async getAllCelebrate(userId: string) {
-    const celebrate = this.prisma.celebrate.findFirst({
+    const celebrate = this.prisma.celebrate.findMany({
       where: { userId },
       include: {
         trip: {
@@ -32,20 +32,22 @@ export class CelebrateService {
             avatar: true,
           },
         },
+        images: true,
       },
-      orderBy: { date: "asc" },
+      orderBy: { date: "desc" },
     });
     return celebrate;
   }
   async createCelebrate(userId: string, data: CreateCelebrateDTO) {
+    const imageList = Array.isArray(data.images) ? data.images : [];
     const celebrate = await this.prisma.celebrate.create({
       data: {
         userId,
         tripId: data.tripId,
         description: data.description,
-        date: data.date,
+        date: new Date(data.date),
         images: {
-          create: data.images.map((img) => ({
+          create: imageList.map((img) => ({
             imageUrl: img,
           })),
         },
@@ -91,5 +93,4 @@ export class CelebrateService {
       },
     });
   }
-  
 }
