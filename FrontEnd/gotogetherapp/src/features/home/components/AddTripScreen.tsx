@@ -170,7 +170,7 @@ const AddTripScreen: React.FC<AddTripScreenProps> = ({
               <Text style={styles.calendarIcon}>📅</Text>
             </TouchableOpacity>
 
-            <Text style={styles.label}>Ngân sách</Text>
+            <Text style={styles.label}>Ngân sách dự tính</Text>
             <TextInput
               style={styles.input}
               placeholder="Ngân sách chuyến đi"

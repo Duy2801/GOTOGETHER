@@ -104,6 +104,12 @@ export interface InviteMemberResponse {
   };
 }
 
+export interface TripMemberActionResponse {
+  status: boolean;
+  data?: any;
+  message?: string;
+}
+
 export const tripDetailApi = {
   getTripDetail: async (
     tripId: string,
@@ -176,6 +182,35 @@ export const tripDetailApi = {
     try {
       const response = await api.post(`/tripMember/${tripId}/invite`, payload);
       return response as unknown as InviteMemberResponse;
+    } catch (error) {
+      throw error as ApiError;
+    }
+  },
+
+  leaveTrip: async (tripId: string): Promise<TripMemberActionResponse> => {
+    try {
+      const response = await api.post(`/tripMember/${tripId}/leave`);
+      return response as unknown as TripMemberActionResponse;
+    } catch (error: any) {
+      // Keep compatibility in case backend uses an alternative route.
+      const statusCode = error?.statusCode || error?.status;
+      if (statusCode === 404) {
+        const fallback = await api.post(`/trips/${tripId}/leave`);
+        return fallback as unknown as TripMemberActionResponse;
+      }
+      throw error as ApiError;
+    }
+  },
+
+  transferOwner: async (
+    tripId: string,
+    newOwnerId: string,
+  ): Promise<TripMemberActionResponse> => {
+    try {
+      const response = await api.post(
+        `/tripMember/${tripId}/transfer-ower/${newOwnerId}`,
+      );
+      return response as unknown as TripMemberActionResponse;
     } catch (error) {
       throw error as ApiError;
     }

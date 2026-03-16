@@ -36,6 +36,14 @@ let TripMemberController = class TripMemberController {
         const userId = req.user.userId;
         return this.tripMemberService.repondInitation(userId, tripId, dto.status);
     }
+    leaveTrip(tripId, req) {
+        const userId = req.user.userId;
+        return this.tripMemberService.leaveTrip(userId, tripId);
+    }
+    transferOwner(tripId, userId, req) {
+        const user_Id = req.user.userId;
+        return this.tripMemberService.roleChange(user_Id, tripId, userId);
+    }
 };
 exports.TripMemberController = TripMemberController;
 __decorate([
@@ -64,6 +72,23 @@ __decorate([
     __metadata("design:paramtypes", [Request, String, RespondInvitationDto_1.RespondInvitationDto]),
     __metadata("design:returntype", void 0)
 ], TripMemberController.prototype, "respondInvitaion", null);
+__decorate([
+    (0, common_1.Post)(":trip/leave"),
+    __param(0, (0, common_1.Param)("tripId")),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Request]),
+    __metadata("design:returntype", void 0)
+], TripMemberController.prototype, "leaveTrip", null);
+__decorate([
+    (0, common_1.Post)(":tripId/transfer-ower/:userId"),
+    __param(0, (0, common_1.Param)("tripId")),
+    __param(1, (0, common_1.Param)("userId")),
+    __param(2, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, Request]),
+    __metadata("design:returntype", void 0)
+], TripMemberController.prototype, "transferOwner", null);
 exports.TripMemberController = TripMemberController = __decorate([
     (0, common_1.Controller)("tripMember"),
     (0, swagger_1.ApiTags)("TripMember"),

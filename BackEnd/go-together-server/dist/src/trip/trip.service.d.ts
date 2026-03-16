@@ -11,22 +11,22 @@ export declare class TripService {
         limit: number;
     }): Promise<{
         trips: ({
+            _count: {
+                members: number;
+            };
             members: {
                 role: import("prisma/generated/enums").MemberRole;
                 inviteStatus: import("prisma/generated/enums").InviteStatus;
             }[];
-            _count: {
-                members: number;
-            };
         } & {
             id: string;
+            status: import("prisma/generated/enums").TripStatus;
+            createdAt: Date;
+            updatedAt: Date;
             name: string;
             startDate: Date;
             endDate: Date;
             totalBudget: import("@prisma/client-runtime-utils").Decimal | null;
-            status: import("prisma/generated/enums").TripStatus;
-            createdAt: Date;
-            updatedAt: Date;
             images: string | null;
         })[];
         total: number;
@@ -36,13 +36,13 @@ export declare class TripService {
     getTripDetail(tripId: string): Promise<TripDetailResponseDto>;
     createTrip(userId: string, data: CreateTripDTO): Promise<{
         id: string;
+        status: import("prisma/generated/enums").TripStatus;
+        createdAt: Date;
+        updatedAt: Date;
         name: string;
         startDate: Date;
         endDate: Date;
         totalBudget: import("@prisma/client-runtime-utils").Decimal | null;
-        status: import("prisma/generated/enums").TripStatus;
-        createdAt: Date;
-        updatedAt: Date;
         images: string | null;
     }>;
     getTotalAmoutAndQuantity(userId: string): Promise<tripAmountQuantityResponse>;

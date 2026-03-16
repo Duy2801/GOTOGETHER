@@ -130,6 +130,70 @@ let TripMemberService = class TripMemberService {
         });
         return members;
     }
+    async leaveTrip(userId, tripId) {
+        const member = await this.prisma.tripMember.findUnique({
+            where: {
+                tripId_userId: { tripId, userId },
+            },
+        });
+        if (!member) {
+            throw new common_1.NotFoundException("Bạn không thuộc chuyến đi này");
+        }
+        if (member.leftAt) {
+            throw new common_1.BadRequestException("Bạn đã rời chuyến đi trước đó");
+        }
+        if (member.role === "OWNER") {
+            throw new common_1.BadRequestException("Chủ chuyến đi phải chuyển quyền trước khi rời nhóm");
+        }
+        return this.prisma.tripMember.update({
+            where: {
+                tripId_userId: { tripId, userId },
+            },
+            data: {
+                leftAt: new Date(),
+            },
+        });
+    }
+    async roleChange(userId, tripId, newOwnerId) {
+        const currentMember = await this.prisma.tripMember.findUnique({
+            where: {
+                tripId_userId: { tripId, userId },
+            },
+        });
+        if (!currentMember) {
+            throw new Error("Bạn không thuộc chuyến đi này");
+        }
+        if (currentMember.role !== "OWNER") {
+            throw new Error("Chỉ chủ chuyến đi mới được chuyển quyền");
+        }
+        const newOwner = await this.prisma.tripMember.findUnique({
+            where: {
+                tripId_userId: { tripId, userId: newOwnerId },
+            },
+        });
+        if (!newOwner) {
+            throw new Error("Người này không thuộc chuyến đi");
+        }
+        if (newOwner.leftAt) {
+            throw new Error("Người này đã rời chuyến đi");
+        }
+        return this.prisma.$transaction([
+            this.prisma.tripMember.update({
+                where: {
+                    tripId_userId: { tripId, userId },
+                },
+                data: {
+                    role: "MEMBER",
+                },
+            }),
+            this.prisma.tripMember.update({
+                where: { tripId_userId: { tripId, userId: newOwnerId } },
+                data: {
+                    role: "OWNER",
+                },
+            }),
+        ]);
+    }
 };
 exports.TripMemberService = TripMemberService;
 exports.TripMemberService = TripMemberService = __decorate([

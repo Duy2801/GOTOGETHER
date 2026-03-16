@@ -13,7 +13,7 @@ const MemberSection: React.FC<MemberSectionProps> = ({
   onAddMember,
   onViewAll,
 }) => {
-  const displayMembers = members.slice(0, 3);
+  const displayMembers = members.slice(0, 4);
 
   const getAvatarColor = (index: number) => {
     const colors = ['#FFB74D', '#64B5F6', '#81C784', '#E57373', '#9575CD'];
@@ -24,9 +24,9 @@ const MemberSection: React.FC<MemberSectionProps> = ({
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.label}>Thành viên</Text>
-        <TouchableOpacity style={styles.viewAll}>
-          <Text style={styles.viewText}>Xem tất cả</Text>
-        </TouchableOpacity>
+        {!!members.length && (
+          <Text style={styles.countText}>{members.length} người</Text>
+        )}
       </View>
       <View style={styles.membersRow}>
         {displayMembers.map((member, index) => (
@@ -60,6 +60,12 @@ const MemberSection: React.FC<MemberSectionProps> = ({
             </View>
           </TouchableOpacity>
         )}
+
+        {onViewAll && members.length > displayMembers.length && (
+          <TouchableOpacity style={styles.viewAllLink} onPress={onViewAll}>
+            <Text style={styles.viewText}>Xem tất cả</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -67,80 +73,85 @@ const MemberSection: React.FC<MemberSectionProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 8,
+    marginTop: 10,
   },
   label: {
     fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 12,
+    fontWeight: '700',
+    color: '#1B2332',
   },
   membersRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 12,
+    minHeight: 56,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  countText: {
+    fontSize: 13,
+    color: '#8A96A8',
+    fontWeight: '600',
+  },
   viewAll: {},
   viewText: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#1FB45C',
   },
   memberItem: {
     alignItems: 'center',
-    marginRight: 16,
-    width: 56,
+    marginRight: -10,
+    width: 44,
+    zIndex: 10,
   },
   avatarContainer: {
-    marginBottom: 4,
+    marginBottom: 0,
   },
   avatar: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#EAF1ED',
   },
   avatarText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: '600',
   },
   memberName: {
-    fontSize: 12,
+    display: 'none',
+    fontSize: 11,
     color: '#333',
     textAlign: 'center',
   },
   addButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     borderWidth: 2,
-    borderColor: '#999',
+    borderColor: '#C2CEDC',
     borderStyle: 'dashed',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 4,
+    marginBottom: 0,
+    backgroundColor: '#EBF1F6',
   },
   addText: {
-    fontSize: 24,
-    color: '#999',
+    fontSize: 26,
+    color: '#7D8A9D',
+    marginTop: -1,
   },
-  viewAllButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: '#F5F5F5',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 4,
-  },
-  viewAllText: {
-    fontSize: 11,
-    color: '#666',
-    fontWeight: '500',
+  viewAllLink: {
+    marginLeft: 18,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
   },
 });
 

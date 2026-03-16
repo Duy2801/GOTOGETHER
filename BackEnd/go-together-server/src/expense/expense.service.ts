@@ -264,7 +264,7 @@ export class ExpenseService {
   async getTotalReceived(userId: string) {
     const result = await this.prisma.expenseSplit.aggregate({
       where: {
-        isPaid: true,
+        isPaid: false,
         userId: {
           not: userId,
         },

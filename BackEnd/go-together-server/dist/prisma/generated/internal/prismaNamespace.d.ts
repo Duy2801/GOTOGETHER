@@ -1334,6 +1334,7 @@ export declare const TripMemberScalarFieldEnum: {
     readonly joinedAt: "joinedAt";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
+    readonly leftAt: "leftAt";
 };
 export type TripMemberScalarFieldEnum = (typeof TripMemberScalarFieldEnum)[keyof typeof TripMemberScalarFieldEnum];
 export declare const CategoryScalarFieldEnum: {

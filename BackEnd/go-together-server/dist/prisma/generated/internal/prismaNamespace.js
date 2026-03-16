@@ -135,7 +135,8 @@ exports.TripMemberScalarFieldEnum = {
     inviteStatus: 'inviteStatus',
     joinedAt: 'joinedAt',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    leftAt: 'leftAt'
 };
 exports.CategoryScalarFieldEnum = {
     id: 'id',

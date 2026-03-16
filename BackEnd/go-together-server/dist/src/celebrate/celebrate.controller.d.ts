@@ -11,26 +11,26 @@ export declare class CelebrateController {
             celebrateId: string;
             imageUrl: string;
         }[];
-        trip: {
-            images: string | null;
-            id: string;
-            name: string;
-            startDate: Date;
-            endDate: Date;
-            status: import("../../prisma/generated/enums").TripStatus;
-        };
         user: {
             id: string;
             fullName: string | null;
             avatar: string | null;
         };
+        trip: {
+            id: string;
+            status: import("../../prisma/generated/enums").TripStatus;
+            name: string;
+            startDate: Date;
+            endDate: Date;
+            images: string | null;
+        };
     } & {
+        id: string;
+        createdAt: Date;
         description: string | null;
+        userId: string;
         tripId: string;
         date: Date;
-        id: string;
-        userId: string;
-        createdAt: Date;
     })[]>;
     createCelebrate(req: any, dto: CreateCelebrateDTO): Promise<{
         images: {
@@ -40,12 +40,12 @@ export declare class CelebrateController {
             imageUrl: string;
         }[];
     } & {
+        id: string;
+        createdAt: Date;
         description: string | null;
+        userId: string;
         tripId: string;
         date: Date;
-        id: string;
-        userId: string;
-        createdAt: Date;
     }>;
     updateCelebrate(req: any, celebrateId: string, dto: UpdateCelebrateDTO): Promise<{
         images: {
@@ -55,11 +55,11 @@ export declare class CelebrateController {
             imageUrl: string;
         }[];
     } & {
+        id: string;
+        createdAt: Date;
         description: string | null;
+        userId: string;
         tripId: string;
         date: Date;
-        id: string;
-        userId: string;
-        createdAt: Date;
     }>;
 }

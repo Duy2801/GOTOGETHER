@@ -47,4 +47,18 @@ export class TripMemberController {
       dto.status as any,
     );
   }
+  @Post(":trip/leave")
+  leaveTrip(@Param("tripId") tripId: string, @Req() req: Request) {
+    const userId = (req as any).user.userId;
+    return this.tripMemberService.leaveTrip(userId, tripId);
+  }
+  @Post(":tripId/transfer-ower/:userId")
+  transferOwner(
+    @Param("tripId") tripId: string,
+    @Param("userId") userId: string,
+    @Req() req: Request,
+  ) {
+    const user_Id = (req as any).user.userId;
+    return this.tripMemberService.roleChange(user_Id, tripId, userId);
+  }
 }

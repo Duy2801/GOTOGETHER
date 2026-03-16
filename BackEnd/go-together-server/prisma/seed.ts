@@ -169,7 +169,7 @@ async function main() {
     prisma.category.create({
       data: {
         name: "Accommodation",
-        icon: "🏨",
+        icon: "https://res.cloudinary.com/dvsuhb9cj/image/upload/v1773409586/hotel_2_ttv1vo.png",
         color: "#FF6B6B",
         isDefault: true,
       },
@@ -177,7 +177,7 @@ async function main() {
     prisma.category.create({
       data: {
         name: "Transportation",
-        icon: "🚗",
+        icon: "https://res.cloudinary.com/dvsuhb9cj/image/upload/v1773409587/taxi_2_npq2ub.png",
         color: "#4ECDC4",
         isDefault: true,
       },
@@ -185,7 +185,7 @@ async function main() {
     prisma.category.create({
       data: {
         name: "Food & Drink",
-        icon: "🍔",
+        icon: "https://res.cloudinary.com/dvsuhb9cj/image/upload/v1773409586/fast-food_2_irp7pz.png",
         color: "#FFE66D",
         isDefault: true,
       },
@@ -193,7 +193,7 @@ async function main() {
     prisma.category.create({
       data: {
         name: "Entertainment",
-        icon: "🎭",
+        icon: "https://res.cloudinary.com/dvsuhb9cj/image/upload/v1773409586/game-console_2_b324gx.png",
         color: "#A8E6CF",
         isDefault: true,
       },
@@ -201,7 +201,7 @@ async function main() {
     prisma.category.create({
       data: {
         name: "Shopping",
-        icon: "🛍️",
+        icon: "https://res.cloudinary.com/dvsuhb9cj/image/upload/v1773409586/online-shopping_2_aht7m8.png",
         color: "#FFB6C1",
         isDefault: true,
       },
@@ -209,7 +209,7 @@ async function main() {
     prisma.category.create({
       data: {
         name: "Other",
-        icon: "📝",
+        icon: "https://res.cloudinary.com/dvsuhb9cj/image/upload/v1773409588/more_2_ijykdo.png",
         color: "#C7CEEA",
         isDefault: true,
       },

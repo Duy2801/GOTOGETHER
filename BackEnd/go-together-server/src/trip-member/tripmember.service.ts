@@ -148,4 +148,71 @@ export class TripMemberService {
     });
     return members;
   }
+  async leaveTrip(userId: string, tripId: string) {
+    const member = await this.prisma.tripMember.findUnique({
+      where: {
+        tripId_userId: { tripId, userId },
+      },
+    });
+    if (!member) {
+      throw new NotFoundException("Bạn không thuộc chuyến đi này");
+    }
+    if (member.leftAt) {
+      throw new BadRequestException("Bạn đã rời chuyến đi trước đó");
+    }
+    if (member.role === "OWNER") {
+      throw new BadRequestException(
+        "Chủ chuyến đi phải chuyển quyền trước khi rời nhóm",
+      );
+    }
+    return this.prisma.tripMember.update({
+      where: {
+        tripId_userId: { tripId, userId },
+      },
+      data: {
+        leftAt: new Date(),
+      },
+    });
+  }
+  async roleChange(userId: string, tripId: string, newOwnerId: string) {
+    const currentMember = await this.prisma.tripMember.findUnique({
+      where: {
+        tripId_userId: { tripId, userId },
+      },
+    });
+    if (!currentMember) {
+      throw new Error("Bạn không thuộc chuyến đi này");
+    }
+
+    if (currentMember.role !== "OWNER") {
+      throw new Error("Chỉ chủ chuyến đi mới được chuyển quyền");
+    }
+    const newOwner = await this.prisma.tripMember.findUnique({
+      where: {
+        tripId_userId: { tripId, userId: newOwnerId },
+      },
+    });
+    if (!newOwner) {
+      throw new Error("Người này không thuộc chuyến đi");
+    }
+    if (newOwner.leftAt) {
+      throw new Error("Người này đã rời chuyến đi");
+    }
+    return this.prisma.$transaction([
+      this.prisma.tripMember.update({
+        where: {
+          tripId_userId: { tripId, userId },
+        },
+        data: {
+          role: "MEMBER",
+        },
+      }),
+      this.prisma.tripMember.update({
+        where: { tripId_userId: { tripId, userId: newOwnerId } },
+        data: {
+          role: "OWNER",
+        },
+      }),
+    ]);
+  }
 }

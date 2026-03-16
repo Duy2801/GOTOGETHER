@@ -1589,7 +1589,8 @@ export const TripMemberScalarFieldEnum = {
   inviteStatus: 'inviteStatus',
   joinedAt: 'joinedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  leftAt: 'leftAt'
 } as const
 
 export type TripMemberScalarFieldEnum = (typeof TripMemberScalarFieldEnum)[keyof typeof TripMemberScalarFieldEnum]

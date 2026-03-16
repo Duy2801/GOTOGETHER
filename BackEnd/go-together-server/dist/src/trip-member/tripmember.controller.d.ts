@@ -20,6 +20,7 @@ export declare class TripMemberController {
         joinedAt: Date | null;
         createdAt: Date;
         updatedAt: Date;
+        leftAt: Date | null;
     })[]>;
     inviteMember(req: Request, tripId: string, dto: InviteMemberDto): Promise<{
         user: {
@@ -37,6 +38,7 @@ export declare class TripMemberController {
         joinedAt: Date | null;
         createdAt: Date;
         updatedAt: Date;
+        leftAt: Date | null;
     }>;
     respondInvitaion(req: Request, tripId: string, dto: RespondInvitationDto): Promise<{
         id: string;
@@ -47,5 +49,38 @@ export declare class TripMemberController {
         joinedAt: Date | null;
         createdAt: Date;
         updatedAt: Date;
+        leftAt: Date | null;
     }>;
+    leaveTrip(tripId: string, req: Request): Promise<{
+        id: string;
+        tripId: string;
+        userId: string;
+        role: import("../../prisma/generated/enums").MemberRole;
+        inviteStatus: import("../../prisma/generated/enums").InviteStatus;
+        joinedAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+        leftAt: Date | null;
+    }>;
+    transferOwner(tripId: string, userId: string, req: Request): Promise<[{
+        id: string;
+        tripId: string;
+        userId: string;
+        role: import("../../prisma/generated/enums").MemberRole;
+        inviteStatus: import("../../prisma/generated/enums").InviteStatus;
+        joinedAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+        leftAt: Date | null;
+    }, {
+        id: string;
+        tripId: string;
+        userId: string;
+        role: import("../../prisma/generated/enums").MemberRole;
+        inviteStatus: import("../../prisma/generated/enums").InviteStatus;
+        joinedAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+        leftAt: Date | null;
+    }]>;
 }

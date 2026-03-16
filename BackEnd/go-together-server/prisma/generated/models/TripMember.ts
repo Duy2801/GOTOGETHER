@@ -33,6 +33,7 @@ export type TripMemberMinAggregateOutputType = {
   joinedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  leftAt: Date | null
 }
 
 export type TripMemberMaxAggregateOutputType = {
@@ -44,6 +45,7 @@ export type TripMemberMaxAggregateOutputType = {
   joinedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  leftAt: Date | null
 }
 
 export type TripMemberCountAggregateOutputType = {
@@ -55,6 +57,7 @@ export type TripMemberCountAggregateOutputType = {
   joinedAt: number
   createdAt: number
   updatedAt: number
+  leftAt: number
   _all: number
 }
 
@@ -68,6 +71,7 @@ export type TripMemberMinAggregateInputType = {
   joinedAt?: true
   createdAt?: true
   updatedAt?: true
+  leftAt?: true
 }
 
 export type TripMemberMaxAggregateInputType = {
@@ -79,6 +83,7 @@ export type TripMemberMaxAggregateInputType = {
   joinedAt?: true
   createdAt?: true
   updatedAt?: true
+  leftAt?: true
 }
 
 export type TripMemberCountAggregateInputType = {
@@ -90,6 +95,7 @@ export type TripMemberCountAggregateInputType = {
   joinedAt?: true
   createdAt?: true
   updatedAt?: true
+  leftAt?: true
   _all?: true
 }
 
@@ -174,6 +180,7 @@ export type TripMemberGroupByOutputType = {
   joinedAt: Date | null
   createdAt: Date
   updatedAt: Date
+  leftAt: Date | null
   _count: TripMemberCountAggregateOutputType | null
   _min: TripMemberMinAggregateOutputType | null
   _max: TripMemberMaxAggregateOutputType | null
@@ -206,6 +213,7 @@ export type TripMemberWhereInput = {
   joinedAt?: Prisma.DateTimeNullableFilter<"TripMember"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"TripMember"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TripMember"> | Date | string
+  leftAt?: Prisma.DateTimeNullableFilter<"TripMember"> | Date | string | null
   trip?: Prisma.XOR<Prisma.TripScalarRelationFilter, Prisma.TripWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -219,6 +227,7 @@ export type TripMemberOrderByWithRelationInput = {
   joinedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  leftAt?: Prisma.SortOrderInput | Prisma.SortOrder
   trip?: Prisma.TripOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
   _relevance?: Prisma.TripMemberOrderByRelevanceInput
@@ -237,6 +246,7 @@ export type TripMemberWhereUniqueInput = Prisma.AtLeast<{
   joinedAt?: Prisma.DateTimeNullableFilter<"TripMember"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"TripMember"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TripMember"> | Date | string
+  leftAt?: Prisma.DateTimeNullableFilter<"TripMember"> | Date | string | null
   trip?: Prisma.XOR<Prisma.TripScalarRelationFilter, Prisma.TripWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "tripId_userId">
@@ -250,6 +260,7 @@ export type TripMemberOrderByWithAggregationInput = {
   joinedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  leftAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TripMemberCountOrderByAggregateInput
   _max?: Prisma.TripMemberMaxOrderByAggregateInput
   _min?: Prisma.TripMemberMinOrderByAggregateInput
@@ -267,6 +278,7 @@ export type TripMemberScalarWhereWithAggregatesInput = {
   joinedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TripMember"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TripMember"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"TripMember"> | Date | string
+  leftAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TripMember"> | Date | string | null
 }
 
 export type TripMemberCreateInput = {
@@ -276,6 +288,7 @@ export type TripMemberCreateInput = {
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  leftAt?: Date | string | null
   trip: Prisma.TripCreateNestedOneWithoutMembersInput
   user: Prisma.UserCreateNestedOneWithoutTripMembersInput
 }
@@ -289,6 +302,7 @@ export type TripMemberUncheckedCreateInput = {
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  leftAt?: Date | string | null
 }
 
 export type TripMemberUpdateInput = {
@@ -298,6 +312,7 @@ export type TripMemberUpdateInput = {
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trip?: Prisma.TripUpdateOneRequiredWithoutMembersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutTripMembersNestedInput
 }
@@ -311,6 +326,7 @@ export type TripMemberUncheckedUpdateInput = {
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TripMemberCreateManyInput = {
@@ -322,6 +338,7 @@ export type TripMemberCreateManyInput = {
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  leftAt?: Date | string | null
 }
 
 export type TripMemberUpdateManyMutationInput = {
@@ -331,6 +348,7 @@ export type TripMemberUpdateManyMutationInput = {
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TripMemberUncheckedUpdateManyInput = {
@@ -342,6 +360,7 @@ export type TripMemberUncheckedUpdateManyInput = {
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TripMemberListRelationFilter = {
@@ -374,6 +393,7 @@ export type TripMemberCountOrderByAggregateInput = {
   joinedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  leftAt?: Prisma.SortOrder
 }
 
 export type TripMemberMaxOrderByAggregateInput = {
@@ -385,6 +405,7 @@ export type TripMemberMaxOrderByAggregateInput = {
   joinedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  leftAt?: Prisma.SortOrder
 }
 
 export type TripMemberMinOrderByAggregateInput = {
@@ -396,6 +417,7 @@ export type TripMemberMinOrderByAggregateInput = {
   joinedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  leftAt?: Prisma.SortOrder
 }
 
 export type TripMemberCreateNestedManyWithoutUserInput = {
@@ -497,6 +519,7 @@ export type TripMemberCreateWithoutUserInput = {
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  leftAt?: Date | string | null
   trip: Prisma.TripCreateNestedOneWithoutMembersInput
 }
 
@@ -508,6 +531,7 @@ export type TripMemberUncheckedCreateWithoutUserInput = {
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  leftAt?: Date | string | null
 }
 
 export type TripMemberCreateOrConnectWithoutUserInput = {
@@ -548,6 +572,7 @@ export type TripMemberScalarWhereInput = {
   joinedAt?: Prisma.DateTimeNullableFilter<"TripMember"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"TripMember"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TripMember"> | Date | string
+  leftAt?: Prisma.DateTimeNullableFilter<"TripMember"> | Date | string | null
 }
 
 export type TripMemberCreateWithoutTripInput = {
@@ -557,6 +582,7 @@ export type TripMemberCreateWithoutTripInput = {
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  leftAt?: Date | string | null
   user: Prisma.UserCreateNestedOneWithoutTripMembersInput
 }
 
@@ -568,6 +594,7 @@ export type TripMemberUncheckedCreateWithoutTripInput = {
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  leftAt?: Date | string | null
 }
 
 export type TripMemberCreateOrConnectWithoutTripInput = {
@@ -604,6 +631,7 @@ export type TripMemberCreateManyUserInput = {
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  leftAt?: Date | string | null
 }
 
 export type TripMemberUpdateWithoutUserInput = {
@@ -613,6 +641,7 @@ export type TripMemberUpdateWithoutUserInput = {
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trip?: Prisma.TripUpdateOneRequiredWithoutMembersNestedInput
 }
 
@@ -624,6 +653,7 @@ export type TripMemberUncheckedUpdateWithoutUserInput = {
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TripMemberUncheckedUpdateManyWithoutUserInput = {
@@ -634,6 +664,7 @@ export type TripMemberUncheckedUpdateManyWithoutUserInput = {
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TripMemberCreateManyTripInput = {
@@ -644,6 +675,7 @@ export type TripMemberCreateManyTripInput = {
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  leftAt?: Date | string | null
 }
 
 export type TripMemberUpdateWithoutTripInput = {
@@ -653,6 +685,7 @@ export type TripMemberUpdateWithoutTripInput = {
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutTripMembersNestedInput
 }
 
@@ -664,6 +697,7 @@ export type TripMemberUncheckedUpdateWithoutTripInput = {
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TripMemberUncheckedUpdateManyWithoutTripInput = {
@@ -674,6 +708,7 @@ export type TripMemberUncheckedUpdateManyWithoutTripInput = {
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -687,6 +722,7 @@ export type TripMemberSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   joinedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  leftAt?: boolean
   trip?: boolean | Prisma.TripDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tripMember"]>
@@ -702,9 +738,10 @@ export type TripMemberSelectScalar = {
   joinedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  leftAt?: boolean
 }
 
-export type TripMemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tripId" | "userId" | "role" | "inviteStatus" | "joinedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["tripMember"]>
+export type TripMemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tripId" | "userId" | "role" | "inviteStatus" | "joinedAt" | "createdAt" | "updatedAt" | "leftAt", ExtArgs["result"]["tripMember"]>
 export type TripMemberInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   trip?: boolean | Prisma.TripDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -725,6 +762,7 @@ export type $TripMemberPayload<ExtArgs extends runtime.Types.Extensions.Internal
     joinedAt: Date | null
     createdAt: Date
     updatedAt: Date
+    leftAt: Date | null
   }, ExtArgs["result"]["tripMember"]>
   composites: {}
 }
@@ -1104,6 +1142,7 @@ export interface TripMemberFieldRefs {
   readonly joinedAt: Prisma.FieldRef<"TripMember", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"TripMember", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"TripMember", 'DateTime'>
+  readonly leftAt: Prisma.FieldRef<"TripMember", 'DateTime'>
 }
     
 
