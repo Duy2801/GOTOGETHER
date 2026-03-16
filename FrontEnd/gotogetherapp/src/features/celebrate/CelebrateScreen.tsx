@@ -17,6 +17,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import ImagePicker from 'react-native-image-crop-picker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SimpleFloatingButton from '../../components/SimpleFloatingButton';
@@ -189,10 +190,26 @@ function CelebrateScreen() {
         <View style={styles.cardContent}>
           <View style={styles.cardTopRow}>
             <View style={styles.datePill}>
-              <Text style={styles.datePillText}>{formatDate(item.date)}</Text>
+              <View style={styles.inlineInfoRow}>
+                <FontAwesome6
+                  name="calendar-day"
+                  size={11}
+                  color="#166534"
+                  iconStyle="solid"
+                />
+                <Text style={styles.datePillText}>{formatDate(item.date)}</Text>
+              </View>
             </View>
             {!!gallery.length && (
-              <Text style={styles.photoCountText}>{gallery.length} ảnh</Text>
+              <View style={styles.inlineInfoRow}>
+                <FontAwesome6
+                  name="images"
+                  size={11}
+                  color="#0A7B45"
+                  iconStyle="solid"
+                />
+                <Text style={styles.photoCountText}>{gallery.length} ảnh</Text>
+              </View>
             )}
           </View>
 
@@ -224,15 +241,31 @@ function CelebrateScreen() {
               </Text>
             </View>
 
-            <Text style={styles.rangeText}>
-              {formatDate(item.trip?.startDate)} -{' '}
-              {formatDate(item.trip?.endDate)}
-            </Text>
+            <View style={styles.inlineInfoRow}>
+              <FontAwesome6
+                name="route"
+                size={11}
+                color="#64748B"
+                iconStyle="solid"
+              />
+              <Text style={styles.rangeText}>
+                {formatDate(item.trip?.startDate)} -{' '}
+                {formatDate(item.trip?.endDate)}
+              </Text>
+            </View>
           </View>
 
-          <Text style={styles.readMoreText}>
-            Nhấn để xem toàn bộ ảnh và nội dung
-          </Text>
+          <View style={styles.inlineInfoRow}>
+            <FontAwesome6
+              name="circle-info"
+              size={12}
+              color="#1E6D48"
+              iconStyle="solid"
+            />
+            <Text style={styles.readMoreText}>
+              Nhấn để xem toàn bộ ảnh và nội dung
+            </Text>
+          </View>
         </View>
       </Pressable>
     );
@@ -480,9 +513,17 @@ function CelebrateScreen() {
               </ScrollView>
 
               <View style={styles.detailContent}>
-                <Text style={styles.detailMeta}>
-                  {formatDate(selectedDetail?.date)}
-                </Text>
+                <View style={styles.detailMetaRow}>
+                  <FontAwesome6
+                    name="calendar-day"
+                    size={12}
+                    color="#64748B"
+                    iconStyle="solid"
+                  />
+                  <Text style={styles.detailMeta}>
+                    {formatDate(selectedDetail?.date)}
+                  </Text>
+                </View>
 
                 <Text style={styles.detailSectionTitle}>Nội dung</Text>
                 <Text style={styles.detailDescription}>
@@ -493,17 +534,41 @@ function CelebrateScreen() {
                 <Text style={styles.detailSectionTitle}>
                   Thông tin chuyến đi
                 </Text>
-                <Text style={styles.detailInfoText}>
-                  {formatDate(selectedDetail?.trip?.startDate)} -{' '}
-                  {formatDate(selectedDetail?.trip?.endDate)}
-                </Text>
-                <Text style={styles.detailInfoText}>
-                  Người tạo: {selectedDetail?.user?.fullName || 'Thành viên'}
-                </Text>
-                <Text style={styles.detailInfoText}>
-                  Số ảnh:{' '}
-                  {selectedDetail ? getItemImages(selectedDetail).length : 0}
-                </Text>
+                <View style={styles.detailInfoRow}>
+                  <FontAwesome6
+                    name="route"
+                    size={12}
+                    color="#475569"
+                    iconStyle="solid"
+                  />
+                  <Text style={styles.detailInfoText}>
+                    {formatDate(selectedDetail?.trip?.startDate)} -{' '}
+                    {formatDate(selectedDetail?.trip?.endDate)}
+                  </Text>
+                </View>
+                <View style={styles.detailInfoRow}>
+                  <FontAwesome6
+                    name="user"
+                    size={12}
+                    color="#475569"
+                    iconStyle="solid"
+                  />
+                  <Text style={styles.detailInfoText}>
+                    Người tạo: {selectedDetail?.user?.fullName || 'Thành viên'}
+                  </Text>
+                </View>
+                <View style={styles.detailInfoRow}>
+                  <FontAwesome6
+                    name="images"
+                    size={12}
+                    color="#475569"
+                    iconStyle="solid"
+                  />
+                  <Text style={styles.detailInfoText}>
+                    Số ảnh:{' '}
+                    {selectedDetail ? getItemImages(selectedDetail).length : 0}
+                  </Text>
+                </View>
               </View>
             </ScrollView>
           </View>
@@ -800,6 +865,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
   },
+  inlineInfoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
   tripName: {
     fontSize: 18,
     fontWeight: '700',
@@ -977,6 +1047,11 @@ const styles = StyleSheet.create({
     color: '#64748B',
     fontSize: 12,
   },
+  detailMetaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
   detailSectionTitle: {
     color: '#0F172A',
     fontSize: 14,
@@ -991,6 +1066,11 @@ const styles = StyleSheet.create({
   detailInfoText: {
     color: '#475569',
     fontSize: 13,
+  },
+  detailInfoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 7,
   },
   modalOverlay: {
     flex: 1,
