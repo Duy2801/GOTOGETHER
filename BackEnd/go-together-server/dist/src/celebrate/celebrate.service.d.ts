@@ -5,9 +5,15 @@ export declare class CelebrateService {
     private prisma;
     constructor(prisma: PrismaService);
     getAllCelebrate(userId: string): Promise<({
-        trip: {
+        images: {
             id: string;
+            createdAt: Date;
+            celebrateId: string;
+            imageUrl: string;
+        }[];
+        trip: {
             images: string | null;
+            id: string;
             name: string;
             startDate: Date;
             endDate: Date;
@@ -18,18 +24,12 @@ export declare class CelebrateService {
             fullName: string | null;
             avatar: string | null;
         };
-        images: {
-            id: string;
-            createdAt: Date;
-            celebrateId: string;
-            imageUrl: string;
-        }[];
     } & {
-        id: string;
-        tripId: string;
-        userId: string;
         description: string | null;
+        tripId: string;
         date: Date;
+        id: string;
+        userId: string;
         createdAt: Date;
     })[]>;
     createCelebrate(userId: string, data: CreateCelebrateDTO): Promise<{
@@ -40,11 +40,11 @@ export declare class CelebrateService {
             imageUrl: string;
         }[];
     } & {
-        id: string;
-        tripId: string;
-        userId: string;
         description: string | null;
+        tripId: string;
         date: Date;
+        id: string;
+        userId: string;
         createdAt: Date;
     }>;
     updateCelebrate(celebrateId: string, userId: string, data: UpdateCelebrateDTO): Promise<{
@@ -55,11 +55,11 @@ export declare class CelebrateService {
             imageUrl: string;
         }[];
     } & {
-        id: string;
-        tripId: string;
-        userId: string;
         description: string | null;
+        tripId: string;
         date: Date;
+        id: string;
+        userId: string;
         createdAt: Date;
     }>;
 }

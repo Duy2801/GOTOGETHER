@@ -5,9 +5,15 @@ export declare class CelebrateController {
     private celebrateService;
     constructor(celebrateService: CelebrateService);
     getAllCelebration(req: any): Promise<({
-        trip: {
+        images: {
             id: string;
+            createdAt: Date;
+            celebrateId: string;
+            imageUrl: string;
+        }[];
+        trip: {
             images: string | null;
+            id: string;
             name: string;
             startDate: Date;
             endDate: Date;
@@ -18,18 +24,12 @@ export declare class CelebrateController {
             fullName: string | null;
             avatar: string | null;
         };
-        images: {
-            id: string;
-            createdAt: Date;
-            celebrateId: string;
-            imageUrl: string;
-        }[];
     } & {
-        id: string;
-        tripId: string;
-        userId: string;
         description: string | null;
+        tripId: string;
         date: Date;
+        id: string;
+        userId: string;
         createdAt: Date;
     })[]>;
     createCelebrate(req: any, dto: CreateCelebrateDTO): Promise<{
@@ -40,11 +40,11 @@ export declare class CelebrateController {
             imageUrl: string;
         }[];
     } & {
-        id: string;
-        tripId: string;
-        userId: string;
         description: string | null;
+        tripId: string;
         date: Date;
+        id: string;
+        userId: string;
         createdAt: Date;
     }>;
     updateCelebrate(req: any, celebrateId: string, dto: UpdateCelebrateDTO): Promise<{
@@ -55,11 +55,11 @@ export declare class CelebrateController {
             imageUrl: string;
         }[];
     } & {
-        id: string;
-        tripId: string;
-        userId: string;
         description: string | null;
+        tripId: string;
         date: Date;
+        id: string;
+        userId: string;
         createdAt: Date;
     }>;
 }
