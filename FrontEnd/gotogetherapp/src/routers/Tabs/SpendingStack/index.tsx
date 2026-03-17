@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View } from 'react-native';
 import { SCREEN_NAME } from '../../../constants/screenName';
 import SpendingScreen from '../../../features/spending/SpedingScreen';
+import PaymentDetailScreen from '../../../features/spending/PaymentDetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +16,13 @@ const SpendingStack = () => {
       <Stack.Screen
         name={SCREEN_NAME.SPENDING}
         component={SpendingScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name={SCREEN_NAME.PAYMENT_DETAIL}
+        component={PaymentDetailScreen}
         options={{
           headerShown: false,
         }}

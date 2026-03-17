@@ -28,7 +28,7 @@ model User {
   tripMembers   TripMember[]
   userRoles     UserRole[]
   celebrates    Celebrate[]
-
+budgets Budget[]
   @@map("users")
 }
 
@@ -82,7 +82,6 @@ model Trip {
   status          TripStatus   @default(UPCOMING)
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
-  budgets         Budget[]
   expenses        Expense[]
   itineraries     Itinerary[]
   members         TripMember[]
@@ -158,6 +157,8 @@ model ExpenseSplit {
   splitType  SplitType @default(EQUAL)
   isPaid     Boolean   @default(false)
   paidAt     DateTime?
+  confirmed    Boolean   @default(false)
+  confirmedAt  DateTime?
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   expense    Expense   @relation(fields: [expenseId], references: [id], onDelete: Cascade)
@@ -170,18 +171,21 @@ model ExpenseSplit {
 
 model Budget {
   id         String    @id @default(uuid())
-  tripId     String
+
+  userId     String
   categoryId String?
-  amount     Decimal   @db.Decimal(15, 2)
-  spent      Decimal   @default(0.00) @db.Decimal(15, 2)
+  amount     Decimal   @db.Decimal(15,2)
+  spent      Decimal   @default(0.00) @db.Decimal(15,2)
+  month      Int
+  year       Int
   warningAt  Int       @default(80)
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   category   Category? @relation(fields: [categoryId], references: [id])
-  trip       Trip      @relation(fields: [tripId], references: [id], onDelete: Cascade)
 
-  @@unique([tripId, categoryId])
-  @@index([categoryId], map: "budgets_categoryId_fkey")
+  @@unique([userId, categoryId, month, year])
+  @@index([userId])
   @@map("budgets")
 }
 

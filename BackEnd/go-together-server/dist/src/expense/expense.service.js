@@ -193,6 +193,9 @@ let ExpenseService = class ExpenseService {
                 percentage: s.percentage ? Number(s.percentage) : undefined,
                 splitType: s.splitType,
                 isPaid: s.isPaid,
+                paidAt: s.paidAt ? s.paidAt.toISOString() : undefined,
+                confirmed: Boolean(s.confirmed),
+                confirmedAt: s.confirmedAt ? s.confirmedAt.toISOString() : undefined,
                 user: s.user,
             })),
         };

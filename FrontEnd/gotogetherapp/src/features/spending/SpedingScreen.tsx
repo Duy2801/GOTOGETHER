@@ -1,15 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
-  Pressable,
   RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import Body from '../../components/Layout/Body';
-import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../constants/color';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+import { PRIMARY_COLOR } from '../../constants/color';
+import { SCREEN_NAME } from '../../constants/screenName';
 import { spendingApi } from './api';
 
 type SpendingOverview = {
@@ -20,7 +22,7 @@ type SpendingOverview = {
   totalReceived: number;
 };
 
-const SpendingScreen = () => {
+const SpendingScreen = ({ navigation }: { navigation: any }) => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [errorText, setErrorText] = useState('');
@@ -66,23 +68,24 @@ const SpendingScreen = () => {
     fetchOverview();
   }, [fetchOverview]);
 
-  const remainingBudget = useMemo(() => {
-    return Math.max(overview.totalBudget - overview.totalSpent, 0);
-  }, [overview.totalBudget, overview.totalSpent]);
+  const remainingBudget = useMemo(
+    () => Math.max(overview.totalBudget - overview.totalSpent, 0),
+    [overview.totalBudget, overview.totalSpent],
+  );
 
   const spentPercent = useMemo(() => {
     if (!overview.totalBudget) {
       return 0;
     }
+
     return Math.min(
       Math.round((overview.totalSpent / overview.totalBudget) * 100),
       100,
     );
   }, [overview.totalBudget, overview.totalSpent]);
 
-  const formatCurrency = (value: number) => {
-    return `${Math.round(value).toLocaleString('vi-VN')} đ`;
-  };
+  const formatCurrency = (value: number) =>
+    `${Math.round(value).toLocaleString('vi-VN')} đ`;
 
   const formatCompactMoney = (value: number) => {
     const abs = Math.abs(value);
@@ -96,11 +99,12 @@ const SpendingScreen = () => {
     if (abs >= 1000) {
       return `${(value / 1000).toFixed(0)}k`;
     }
-    return `${value}`;
+
+    return `${Math.round(value)}`;
   };
 
   return (
-    <Body hideHeader={false} title="Chi tiết chi tiêu">
+    <SafeAreaView style={styles.screen} edges={['top', 'left', 'right']}>
       <ScrollView
         contentContainerStyle={styles.container}
         refreshControl={
@@ -111,6 +115,22 @@ const SpendingScreen = () => {
           />
         }
       >
+        <View style={styles.headerRow}>
+          <View>
+            <Text style={styles.headerEyebrow}>Tổng quan tài chính</Text>
+            <Text style={styles.headerTitle}>Chi tiêu</Text>
+          </View>
+          <View style={styles.tripCountPill}>
+            <FontAwesome6
+              name="suitcase-rolling"
+              size={12}
+              color="#0F172A"
+              iconStyle="solid"
+            />
+            <Text style={styles.tripCountText}>{overview.quantity} chuyến</Text>
+          </View>
+        </View>
+
         {loading ? (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color={PRIMARY_COLOR} />
@@ -118,15 +138,18 @@ const SpendingScreen = () => {
           </View>
         ) : (
           <>
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>Tổng quan ngân sách</Text>
+            <View style={styles.heroCard}>
+              <Text style={styles.heroLabel}>Ngân sách còn lại</Text>
+              <Text style={styles.heroValue}>
+                {formatCurrency(remainingBudget)}
+              </Text>
 
-              <View style={styles.metaRow}>
-                <Text style={styles.metaText}>
-                  Đã chi tiêu: {spentPercent}%
+              <View style={styles.progressMetaRow}>
+                <Text style={styles.progressMetaText}>
+                  Đã dùng {spentPercent}%
                 </Text>
-                <Text style={styles.metaText}>
-                  Tổng ngân sách: {formatCompactMoney(overview.totalBudget)}
+                <Text style={styles.progressMetaText}>
+                  Tổng quỹ {formatCompactMoney(overview.totalBudget)}
                 </Text>
               </View>
 
@@ -136,86 +159,132 @@ const SpendingScreen = () => {
                 />
               </View>
 
-              <View style={styles.overviewGrid}>
-                <View style={styles.overviewItem}>
-                  <Text style={styles.overviewLabel}>Số chuyến đi</Text>
-                  <Text style={styles.overviewValue}>{overview.quantity}</Text>
-                </View>
-                <View style={styles.overviewItem}>
-                  <Text style={styles.overviewLabel}>Đã chi</Text>
-                  <Text style={styles.overviewValue}>
+              <View style={styles.statGrid}>
+                <View style={styles.statItem}>
+                  <Text style={styles.statLabel}>Đã chi</Text>
+                  <Text style={styles.statValue}>
                     {formatCompactMoney(overview.totalSpent)}
                   </Text>
                 </View>
-                <View style={styles.overviewItem}>
-                  <Text style={styles.overviewLabel}>Còn lại</Text>
-                  <Text style={styles.greenValue}>
-                    {formatCompactMoney(remainingBudget)}
+                <View style={styles.statItem}>
+                  <Text style={styles.statLabel}>Bạn nợ</Text>
+                  <Text style={styles.statDebt}>
+                    {formatCompactMoney(overview.totalDebt)}
+                  </Text>
+                </View>
+                <View style={[styles.statItem, styles.statItemLast]}>
+                  <Text style={styles.statLabel}>Người khác nợ bạn</Text>
+                  <Text style={styles.statReceive}>
+                    {formatCompactMoney(overview.totalReceived)}
                   </Text>
                 </View>
               </View>
             </View>
 
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>
-                Tình trạng thanh toán của bạn
-              </Text>
+            <View style={styles.paymentCard}>
+              <View style={styles.paymentHeader}>
+                <Text style={styles.cardTitle}>Thanh toán của bạn</Text>
+                <TouchableOpacity
+                  style={styles.detailButton}
+                  onPress={() =>
+                    navigation.navigate(SCREEN_NAME.PAYMENT_DETAIL)
+                  }
+                >
+                  <Text style={styles.detailButtonText}>Xem chi tiết</Text>
+                </TouchableOpacity>
+              </View>
 
-              <View style={[styles.statusRow, styles.neutralBg]}>
-                <Text style={styles.statusLabel}>Bạn đã trả</Text>
-                <Text style={styles.statusValue}>
-                  {formatCompactMoney(overview.totalSpent)}
+              <View style={[styles.summaryRow, styles.summaryDebtBg]}>
+                <View style={styles.summaryIconWrap}>
+                  <FontAwesome6
+                    name="arrow-trend-down"
+                    size={12}
+                    color="#EF4444"
+                    iconStyle="solid"
+                  />
+                </View>
+                <View style={styles.summaryTextWrap}>
+                  <Text style={styles.summaryLabel}>Bạn đang nợ</Text>
+                  <Text style={styles.summarySubText}>
+                    Các khoản chưa đánh dấu đã trả
+                  </Text>
+                </View>
+                <Text style={styles.summaryDebtValue}>
+                  -{formatCompactMoney(overview.totalDebt)}
                 </Text>
               </View>
 
-              <View style={[styles.statusRow, styles.debtBg]}>
-                <Text style={styles.statusLabel}>Bạn nợ người khác</Text>
-                <Text style={styles.debtValue}>
-                  {formatCompactMoney(overview.totalDebt)}
+              <View style={[styles.summaryRow, styles.summaryReceiveBg]}>
+                <View style={styles.summaryIconWrap}>
+                  <FontAwesome6
+                    name="arrow-trend-up"
+                    size={12}
+                    color="#22C55E"
+                    iconStyle="solid"
+                  />
+                </View>
+                <View style={styles.summaryTextWrap}>
+                  <Text style={styles.summaryLabel}>Người khác nợ bạn</Text>
+                  <Text style={styles.summarySubText}>
+                    Các khoản bạn đã đứng ra thanh toán
+                  </Text>
+                </View>
+                <Text style={styles.summaryReceiveValue}>
+                  +{formatCompactMoney(overview.totalReceived)}
                 </Text>
               </View>
-
-              <View style={[styles.statusRow, styles.receivedBg]}>
-                <Text style={styles.statusLabel}>Người khác nợ bạn</Text>
-                <Text style={styles.greenValue}>
-                  {formatCompactMoney(overview.totalReceived)}
-                </Text>
-              </View>
-
-              <View style={styles.totalWrap}>
-                <Text style={styles.totalLabel}>Tổng quát</Text>
-                <Text style={styles.totalValue}>
-                  {formatCurrency(
-                    overview.totalSpent +
-                      overview.totalDebt +
-                      overview.totalReceived,
-                  )}
-                </Text>
-              </View>
-
-              <Pressable style={styles.detailButton}>
-                <Text style={styles.detailButtonText}>
-                  Xem chi tiết thanh toán
-                </Text>
-              </Pressable>
             </View>
 
             {!!errorText && <Text style={styles.errorText}>{errorText}</Text>}
           </>
         )}
       </ScrollView>
-    </Body>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: '#F4F7F4',
+  },
   container: {
-    padding: 16,
-    paddingBottom: 30,
-    gap: 12,
+    paddingHorizontal: 16,
+    paddingBottom: 32,
+    gap: 14,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    paddingTop: 6,
+  },
+  headerEyebrow: {
+    fontSize: 12,
+    color: '#64748B',
+    marginBottom: 3,
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#0F172A',
+  },
+  tripCountPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: '#E7F0E8',
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+  },
+  tripCountText: {
+    color: '#0F172A',
+    fontSize: 12,
+    fontWeight: '700',
   },
   loadingContainer: {
-    minHeight: 220,
+    minHeight: 260,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
@@ -224,134 +293,157 @@ const styles = StyleSheet.create({
     color: '#6B7280',
     fontSize: 14,
   },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
-    padding: 14,
-    gap: 10,
+  heroCard: {
+    backgroundColor: '#0D1B3A',
+    borderRadius: 20,
+    padding: 16,
   },
-  cardTitle: {
-    fontSize: 20,
+  heroLabel: {
+    color: '#9CB0D9',
+    fontSize: 12,
+    fontWeight: '600',
+    marginBottom: 6,
+  },
+  heroValue: {
+    color: '#FFFFFF',
+    fontSize: 28,
     fontWeight: '700',
-    color: '#0F172A',
+    marginBottom: 12,
   },
-  metaRow: {
+  progressMetaRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 8,
   },
-  metaText: {
-    color: '#64748B',
-    fontSize: 13,
+  progressMetaText: {
+    color: '#C5D1EA',
+    fontSize: 12,
   },
   progressTrack: {
     width: '100%',
     height: 10,
     borderRadius: 99,
-    backgroundColor: '#EEF2F7',
+    backgroundColor: '#20314F',
     overflow: 'hidden',
+    marginBottom: 14,
   },
   progressFill: {
     height: '100%',
-    backgroundColor: SECONDARY_COLOR,
+    backgroundColor: '#1FE05A',
     borderRadius: 99,
   },
-  overviewGrid: {
+  statGrid: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
-  overviewItem: {
-    width: '31%',
+  statItem: {
+    flex: 1,
     borderRightWidth: 1,
-    borderRightColor: '#F1F5F9',
+    borderRightColor: '#1E315E',
     paddingRight: 8,
   },
-  overviewLabel: {
-    color: '#94A3B8',
-    fontSize: 12,
-    textTransform: 'uppercase',
-    marginBottom: 2,
+  statItemLast: {
+    borderRightWidth: 0,
+    paddingRight: 0,
+    paddingLeft: 8,
   },
-  overviewValue: {
-    color: '#111827',
-    fontSize: 26,
+  statLabel: {
+    color: '#7D8FB6',
+    fontSize: 11,
+    marginBottom: 3,
+  },
+  statValue: {
+    color: '#F8FAFC',
+    fontSize: 18,
     fontWeight: '700',
   },
-  statusRow: {
-    borderRadius: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 12,
+  statDebt: {
+    color: '#FB7185',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  statReceive: {
+    color: '#4ADE80',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  paymentCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
+    padding: 14,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    gap: 10,
+  },
+  paymentHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  neutralBg: {
-    backgroundColor: '#F1F5F9',
-  },
-  debtBg: {
-    backgroundColor: '#FFEDEF',
-  },
-  receivedBg: {
-    backgroundColor: '#EAFBEE',
-  },
-  statusLabel: {
-    fontSize: 16,
-    color: '#334155',
-    fontWeight: '500',
-  },
-  statusValue: {
-    fontSize: 28,
+  cardTitle: {
+    fontSize: 18,
     fontWeight: '700',
     color: '#111827',
-  },
-  debtValue: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#EF4444',
-  },
-  greenValue: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#22C55E',
-  },
-  totalWrap: {
-    marginTop: 4,
-    borderTopWidth: 1,
-    borderTopColor: '#EEF2F7',
-    paddingTop: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  totalLabel: {
-    color: '#64748B',
-    fontSize: 13,
-  },
-  totalValue: {
-    color: '#0F172A',
-    fontSize: 15,
-    fontWeight: '700',
   },
   detailButton: {
-    marginTop: 4,
-    borderRadius: 10,
-    backgroundColor: '#DAF4DF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+    backgroundColor: '#EAFBF0',
   },
   detailButtonText: {
-    color: '#0F172A',
-    fontSize: 15,
+    fontSize: 12,
+    color: '#159947',
     fontWeight: '700',
+  },
+  summaryRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+  },
+  summaryDebtBg: {
+    backgroundColor: '#FFF1F2',
+  },
+  summaryReceiveBg: {
+    backgroundColor: '#EDFCF2',
+  },
+  summaryIconWrap: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+  },
+  summaryTextWrap: {
+    flex: 1,
+  },
+  summaryLabel: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#0F172A',
+  },
+  summarySubText: {
+    fontSize: 12,
+    color: '#64748B',
+    marginTop: 2,
+  },
+  summaryDebtValue: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#F43F5E',
+  },
+  summaryReceiveValue: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#22C55E',
   },
   errorText: {
     color: '#DC2626',
     fontSize: 13,
-    marginTop: 4,
   },
 });
 

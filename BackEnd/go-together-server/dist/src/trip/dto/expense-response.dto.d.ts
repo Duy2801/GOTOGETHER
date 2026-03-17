@@ -5,6 +5,9 @@ export declare class ExpenseSplitDto {
     percentage?: number;
     splitType: string;
     isPaid: boolean;
+    paidAt?: string;
+    confirmed: boolean;
+    confirmedAt?: string;
     user: {
         id: string;
         fullName: string;

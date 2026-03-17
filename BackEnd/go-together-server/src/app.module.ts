@@ -9,6 +9,8 @@ import { CelebrateModule } from "./celebrate/celebrate.module";
 import { ExpenseModule } from "./expense/expense.module";
 import { TripMemberModule } from "./trip-member/tripmember.module";
 import { StorageModule } from "./storage/storage.module";
+import { ExpenseSplitModule } from "./expense-split/expense-split.module";
+import { BudgetModule } from "./budget/budget.module";
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -20,6 +22,8 @@ import { StorageModule } from "./storage/storage.module";
     ExpenseModule,
     TripMemberModule,
     StorageModule,
+    ExpenseSplitModule,
+    BudgetModule,
   ],
   controllers: [AppController],
   providers: [],

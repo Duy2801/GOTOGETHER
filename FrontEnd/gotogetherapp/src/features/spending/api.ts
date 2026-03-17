@@ -1,5 +1,6 @@
 import { ApiError, api } from '../../api';
 import { tripApi } from '../home/api';
+import { tripDetailApi, Expense } from '../tripdetail/api';
 
 const GLOBAL_TRIP_SCOPE = 'all';
 
@@ -18,6 +19,116 @@ export interface SpendingBudgetSummary {
   quantity: number;
   totalBudget: number;
 }
+
+export interface PaymentTimelineItem {
+  splitId: string;
+  expenseId: string;
+  tripId: string;
+  tripName: string;
+  counterpartyId: string;
+  counterpartyName: string;
+  counterpartyAvatar?: string;
+  amount: number;
+  description: string;
+  date: string;
+  direction: 'debt' | 'receivable';
+  isPaid: boolean;
+  confirmed: boolean;
+  paidAt?: string;
+  confirmedAt?: string;
+}
+
+type SplitActionResponse = {
+  status: boolean;
+  data?: any;
+  message?: string;
+};
+
+const buildPaymentItemsFromExpense = (
+  expense: Expense,
+  tripId: string,
+  tripName: string,
+  userId: string,
+): PaymentTimelineItem[] => {
+  if (!expense.splits?.length) {
+    return [];
+  }
+
+  const baseDescription =
+    expense.description || expense.category?.name || 'Khoản thanh toán';
+
+  if (expense.paidBy?.id === userId) {
+    return expense.splits
+      .filter(split => split.userId !== userId && !split.confirmed)
+      .map(split => ({
+        splitId: split.id,
+        expenseId: expense.id,
+        tripId,
+        tripName,
+        counterpartyId: split.user.id,
+        counterpartyName: split.user.fullName,
+        counterpartyAvatar: split.user.avatar,
+        amount: Number(split.amount),
+        description: baseDescription,
+        date: expense.date,
+        direction: 'receivable' as const,
+        isPaid: Boolean(split.isPaid),
+        confirmed: Boolean(split.confirmed),
+        paidAt: split.paidAt,
+        confirmedAt: split.confirmedAt,
+      }));
+  }
+
+  return expense.splits
+    .filter(split => split.userId === userId && !split.isPaid)
+    .map(split => ({
+      splitId: split.id,
+      expenseId: expense.id,
+      tripId,
+      tripName,
+      counterpartyId: expense.paidBy.id,
+      counterpartyName: expense.paidBy.fullName,
+      counterpartyAvatar: expense.paidBy.avatar,
+      amount: Number(split.amount),
+      description: baseDescription,
+      date: expense.date,
+      direction: 'debt' as const,
+      isPaid: Boolean(split.isPaid),
+      confirmed: Boolean(split.confirmed),
+      paidAt: split.paidAt,
+      confirmedAt: split.confirmedAt,
+    }));
+};
+
+const groupPaymentItems = (items: PaymentTimelineItem[]) => {
+  const grouped = new Map<string, PaymentTimelineItem[]>();
+
+  items.forEach(item => {
+    const key = `${item.direction}:${item.counterpartyId}`;
+    const existing = grouped.get(key) || [];
+    existing.push(item);
+    grouped.set(key, existing);
+  });
+
+  return Array.from(grouped.entries()).map(([key, groupItems]) => {
+    const [direction] = key.split(':');
+    const first = groupItems[0];
+    const totalAmount = groupItems.reduce((sum, item) => sum + item.amount, 0);
+
+    return {
+      id: key,
+      direction: direction as 'debt' | 'receivable',
+      counterpartyId: first.counterpartyId,
+      counterpartyName: first.counterpartyName,
+      counterpartyAvatar: first.counterpartyAvatar,
+      totalAmount,
+      items: groupItems.sort(
+        (left, right) =>
+          new Date(right.date).getTime() - new Date(left.date).getTime(),
+      ),
+    };
+  });
+};
 
 export const spendingApi = {
   getPaymentSummary: async (): Promise<SpendingPaymentSummary> => {
@@ -70,6 +181,83 @@ export const spendingApi = {
         quantity: totalTrips,
         totalBudget,
       };
+    } catch (error) {
+      throw error as ApiError;
+    }
+  },
+
+  getPaymentDetailGroups: async (userId: string) => {
+    try {
+      const firstPage = await tripApi.getTrips({ page: 1, limit: 1 });
+      const totalTrips = Number(firstPage.data.total ?? 0);
+
+      if (!totalTrips) {
+        return {
+          debtGroups: [],
+          receivableGroups: [],
+        };
+      }
+
+      const tripsResponse = await tripApi.getTrips({
+        page: 1,
+        limit: totalTrips,
+      });
+      const trips = tripsResponse.data.trips || [];
+
+      const expenseResponses = await Promise.all(
+        trips.map(async trip => {
+          const response = await tripDetailApi.getTripExpenses(trip.id, {
+            page: 1,
+            limit: 200,
+          });
+
+          return {
+            tripId: trip.id,
+            tripName: trip.name,
+            expenses: response.data.expenses || [],
+          };
+        }),
+      );
+
+      const items = expenseResponses.flatMap(entry =>
+        entry.expenses.flatMap(expense =>
+          buildPaymentItemsFromExpense(
+            expense,
+            entry.tripId,
+            entry.tripName,
+            userId,
+          ),
+        ),
+      );
+
+      const groups = groupPaymentItems(items);
+
+      return {
+        debtGroups: groups.filter(group => group.direction === 'debt'),
+        receivableGroups: groups.filter(
+          group => group.direction === 'receivable',
+        ),
+      };
+    } catch (error) {
+      throw error as ApiError;
+    }
+  },
+
+  markSplitAsPaid: async (splitId: string): Promise<SplitActionResponse> => {
+    try {
+      const response = await api.post(`/expense-split/${splitId}/pay`);
+      return response as unknown as SplitActionResponse;
+    } catch (error) {
+      throw error as ApiError;
+    }
+  },
+
+  confirmSplitReceived: async (
+    splitId: string,
+  ): Promise<SplitActionResponse> => {
+    try {
+      const response = await api.post(`/expense-split/${splitId}/confirm`);
+      return response as unknown as SplitActionResponse;
     } catch (error) {
       throw error as ApiError;
     }

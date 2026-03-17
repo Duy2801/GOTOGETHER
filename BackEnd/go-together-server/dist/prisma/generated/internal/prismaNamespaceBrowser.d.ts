@@ -132,16 +132,20 @@ export declare const ExpenseSplitScalarFieldEnum: {
     readonly splitType: "splitType";
     readonly isPaid: "isPaid";
     readonly paidAt: "paidAt";
+    readonly confirmed: "confirmed";
+    readonly confirmedAt: "confirmedAt";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
 };
 export type ExpenseSplitScalarFieldEnum = (typeof ExpenseSplitScalarFieldEnum)[keyof typeof ExpenseSplitScalarFieldEnum];
 export declare const BudgetScalarFieldEnum: {
     readonly id: "id";
-    readonly tripId: "tripId";
+    readonly userId: "userId";
     readonly categoryId: "categoryId";
     readonly amount: "amount";
     readonly spent: "spent";
+    readonly month: "month";
+    readonly year: "year";
     readonly warningAt: "warningAt";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
@@ -273,7 +277,7 @@ export declare const ExpenseSplitOrderByRelevanceFieldEnum: {
 export type ExpenseSplitOrderByRelevanceFieldEnum = (typeof ExpenseSplitOrderByRelevanceFieldEnum)[keyof typeof ExpenseSplitOrderByRelevanceFieldEnum];
 export declare const BudgetOrderByRelevanceFieldEnum: {
     readonly id: "id";
-    readonly tripId: "tripId";
+    readonly userId: "userId";
     readonly categoryId: "categoryId";
 };
 export type BudgetOrderByRelevanceFieldEnum = (typeof BudgetOrderByRelevanceFieldEnum)[keyof typeof BudgetOrderByRelevanceFieldEnum];

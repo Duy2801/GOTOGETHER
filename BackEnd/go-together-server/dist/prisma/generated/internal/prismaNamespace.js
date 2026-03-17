@@ -171,15 +171,19 @@ exports.ExpenseSplitScalarFieldEnum = {
     splitType: 'splitType',
     isPaid: 'isPaid',
     paidAt: 'paidAt',
+    confirmed: 'confirmed',
+    confirmedAt: 'confirmedAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };
 exports.BudgetScalarFieldEnum = {
     id: 'id',
-    tripId: 'tripId',
+    userId: 'userId',
     categoryId: 'categoryId',
     amount: 'amount',
     spent: 'spent',
+    month: 'month',
+    year: 'year',
     warningAt: 'warningAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -293,7 +297,7 @@ exports.ExpenseSplitOrderByRelevanceFieldEnum = {
 };
 exports.BudgetOrderByRelevanceFieldEnum = {
     id: 'id',
-    tripId: 'tripId',
+    userId: 'userId',
     categoryId: 'categoryId'
 };
 exports.JsonNullValueFilter = {

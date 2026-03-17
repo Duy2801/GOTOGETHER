@@ -14,6 +14,7 @@ export const SCREEN_NAME = {
   SETTING: 'Setting',
   SPENDING_TAB: 'SpendingTab',
   SPENDING: 'Spending',
+  PAYMENT_DETAIL: 'PaymentDetail',
   TRIP_DETAIL: 'TripDetailScreen',
   ADD_EXPENSE: 'AddExpense',
   ADD_TRIP: 'AddTrip',

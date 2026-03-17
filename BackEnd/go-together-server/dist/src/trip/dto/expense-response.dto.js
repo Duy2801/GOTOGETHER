@@ -8,6 +8,9 @@ class ExpenseSplitDto {
     percentage;
     splitType;
     isPaid;
+    paidAt;
+    confirmed;
+    confirmedAt;
     user;
 }
 exports.ExpenseSplitDto = ExpenseSplitDto;

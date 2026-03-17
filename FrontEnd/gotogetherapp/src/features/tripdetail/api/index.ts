@@ -23,6 +23,9 @@ export interface ExpenseSplit {
   percentage?: number;
   splitType: 'EQUAL' | 'CUSTOM' | 'PERCENTAGE';
   isPaid: boolean;
+  paidAt?: string;
+  confirmed: boolean;
+  confirmedAt?: string;
   user: {
     id: string;
     fullName: string;

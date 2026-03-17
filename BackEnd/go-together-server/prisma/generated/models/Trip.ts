@@ -248,7 +248,6 @@ export type TripWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Trip"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Trip"> | Date | string
   images?: Prisma.StringNullableFilter<"Trip"> | string | null
-  budgets?: Prisma.BudgetListRelationFilter
   expenses?: Prisma.ExpenseListRelationFilter
   itineraries?: Prisma.ItineraryListRelationFilter
   members?: Prisma.TripMemberListRelationFilter
@@ -265,7 +264,6 @@ export type TripOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   images?: Prisma.SortOrderInput | Prisma.SortOrder
-  budgets?: Prisma.BudgetOrderByRelationAggregateInput
   expenses?: Prisma.ExpenseOrderByRelationAggregateInput
   itineraries?: Prisma.ItineraryOrderByRelationAggregateInput
   members?: Prisma.TripMemberOrderByRelationAggregateInput
@@ -286,7 +284,6 @@ export type TripWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Trip"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Trip"> | Date | string
   images?: Prisma.StringNullableFilter<"Trip"> | string | null
-  budgets?: Prisma.BudgetListRelationFilter
   expenses?: Prisma.ExpenseListRelationFilter
   itineraries?: Prisma.ItineraryListRelationFilter
   members?: Prisma.TripMemberListRelationFilter
@@ -335,7 +332,6 @@ export type TripCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: string | null
-  budgets?: Prisma.BudgetCreateNestedManyWithoutTripInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutTripInput
   itineraries?: Prisma.ItineraryCreateNestedManyWithoutTripInput
   members?: Prisma.TripMemberCreateNestedManyWithoutTripInput
@@ -352,7 +348,6 @@ export type TripUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: string | null
-  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutTripInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutTripInput
   itineraries?: Prisma.ItineraryUncheckedCreateNestedManyWithoutTripInput
   members?: Prisma.TripMemberUncheckedCreateNestedManyWithoutTripInput
@@ -369,7 +364,6 @@ export type TripUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budgets?: Prisma.BudgetUpdateManyWithoutTripNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutTripNestedInput
   itineraries?: Prisma.ItineraryUpdateManyWithoutTripNestedInput
   members?: Prisma.TripMemberUpdateManyWithoutTripNestedInput
@@ -386,7 +380,6 @@ export type TripUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutTripNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutTripNestedInput
   itineraries?: Prisma.ItineraryUncheckedUpdateManyWithoutTripNestedInput
   members?: Prisma.TripMemberUncheckedUpdateManyWithoutTripNestedInput
@@ -524,20 +517,6 @@ export type TripUpdateOneRequiredWithoutExpensesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TripUpdateToOneWithWhereWithoutExpensesInput, Prisma.TripUpdateWithoutExpensesInput>, Prisma.TripUncheckedUpdateWithoutExpensesInput>
 }
 
-export type TripCreateNestedOneWithoutBudgetsInput = {
-  create?: Prisma.XOR<Prisma.TripCreateWithoutBudgetsInput, Prisma.TripUncheckedCreateWithoutBudgetsInput>
-  connectOrCreate?: Prisma.TripCreateOrConnectWithoutBudgetsInput
-  connect?: Prisma.TripWhereUniqueInput
-}
-
-export type TripUpdateOneRequiredWithoutBudgetsNestedInput = {
-  create?: Prisma.XOR<Prisma.TripCreateWithoutBudgetsInput, Prisma.TripUncheckedCreateWithoutBudgetsInput>
-  connectOrCreate?: Prisma.TripCreateOrConnectWithoutBudgetsInput
-  upsert?: Prisma.TripUpsertWithoutBudgetsInput
-  connect?: Prisma.TripWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TripUpdateToOneWithWhereWithoutBudgetsInput, Prisma.TripUpdateWithoutBudgetsInput>, Prisma.TripUncheckedUpdateWithoutBudgetsInput>
-}
-
 export type TripCreateNestedOneWithoutItinerariesInput = {
   create?: Prisma.XOR<Prisma.TripCreateWithoutItinerariesInput, Prisma.TripUncheckedCreateWithoutItinerariesInput>
   connectOrCreate?: Prisma.TripCreateOrConnectWithoutItinerariesInput
@@ -576,7 +555,6 @@ export type TripCreateWithoutMembersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: string | null
-  budgets?: Prisma.BudgetCreateNestedManyWithoutTripInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutTripInput
   itineraries?: Prisma.ItineraryCreateNestedManyWithoutTripInput
   celebrates?: Prisma.CelebrateCreateNestedManyWithoutTripInput
@@ -592,7 +570,6 @@ export type TripUncheckedCreateWithoutMembersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: string | null
-  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutTripInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutTripInput
   itineraries?: Prisma.ItineraryUncheckedCreateNestedManyWithoutTripInput
   celebrates?: Prisma.CelebrateUncheckedCreateNestedManyWithoutTripInput
@@ -624,7 +601,6 @@ export type TripUpdateWithoutMembersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budgets?: Prisma.BudgetUpdateManyWithoutTripNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutTripNestedInput
   itineraries?: Prisma.ItineraryUpdateManyWithoutTripNestedInput
   celebrates?: Prisma.CelebrateUpdateManyWithoutTripNestedInput
@@ -640,7 +616,6 @@ export type TripUncheckedUpdateWithoutMembersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutTripNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutTripNestedInput
   itineraries?: Prisma.ItineraryUncheckedUpdateManyWithoutTripNestedInput
   celebrates?: Prisma.CelebrateUncheckedUpdateManyWithoutTripNestedInput
@@ -656,7 +631,6 @@ export type TripCreateWithoutExpensesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: string | null
-  budgets?: Prisma.BudgetCreateNestedManyWithoutTripInput
   itineraries?: Prisma.ItineraryCreateNestedManyWithoutTripInput
   members?: Prisma.TripMemberCreateNestedManyWithoutTripInput
   celebrates?: Prisma.CelebrateCreateNestedManyWithoutTripInput
@@ -672,7 +646,6 @@ export type TripUncheckedCreateWithoutExpensesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: string | null
-  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutTripInput
   itineraries?: Prisma.ItineraryUncheckedCreateNestedManyWithoutTripInput
   members?: Prisma.TripMemberUncheckedCreateNestedManyWithoutTripInput
   celebrates?: Prisma.CelebrateUncheckedCreateNestedManyWithoutTripInput
@@ -704,7 +677,6 @@ export type TripUpdateWithoutExpensesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budgets?: Prisma.BudgetUpdateManyWithoutTripNestedInput
   itineraries?: Prisma.ItineraryUpdateManyWithoutTripNestedInput
   members?: Prisma.TripMemberUpdateManyWithoutTripNestedInput
   celebrates?: Prisma.CelebrateUpdateManyWithoutTripNestedInput
@@ -720,87 +692,6 @@ export type TripUncheckedUpdateWithoutExpensesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutTripNestedInput
-  itineraries?: Prisma.ItineraryUncheckedUpdateManyWithoutTripNestedInput
-  members?: Prisma.TripMemberUncheckedUpdateManyWithoutTripNestedInput
-  celebrates?: Prisma.CelebrateUncheckedUpdateManyWithoutTripNestedInput
-}
-
-export type TripCreateWithoutBudgetsInput = {
-  id?: string
-  name: string
-  startDate: Date | string
-  endDate: Date | string
-  totalBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  status?: $Enums.TripStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  images?: string | null
-  expenses?: Prisma.ExpenseCreateNestedManyWithoutTripInput
-  itineraries?: Prisma.ItineraryCreateNestedManyWithoutTripInput
-  members?: Prisma.TripMemberCreateNestedManyWithoutTripInput
-  celebrates?: Prisma.CelebrateCreateNestedManyWithoutTripInput
-}
-
-export type TripUncheckedCreateWithoutBudgetsInput = {
-  id?: string
-  name: string
-  startDate: Date | string
-  endDate: Date | string
-  totalBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  status?: $Enums.TripStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  images?: string | null
-  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutTripInput
-  itineraries?: Prisma.ItineraryUncheckedCreateNestedManyWithoutTripInput
-  members?: Prisma.TripMemberUncheckedCreateNestedManyWithoutTripInput
-  celebrates?: Prisma.CelebrateUncheckedCreateNestedManyWithoutTripInput
-}
-
-export type TripCreateOrConnectWithoutBudgetsInput = {
-  where: Prisma.TripWhereUniqueInput
-  create: Prisma.XOR<Prisma.TripCreateWithoutBudgetsInput, Prisma.TripUncheckedCreateWithoutBudgetsInput>
-}
-
-export type TripUpsertWithoutBudgetsInput = {
-  update: Prisma.XOR<Prisma.TripUpdateWithoutBudgetsInput, Prisma.TripUncheckedUpdateWithoutBudgetsInput>
-  create: Prisma.XOR<Prisma.TripCreateWithoutBudgetsInput, Prisma.TripUncheckedCreateWithoutBudgetsInput>
-  where?: Prisma.TripWhereInput
-}
-
-export type TripUpdateToOneWithWhereWithoutBudgetsInput = {
-  where?: Prisma.TripWhereInput
-  data: Prisma.XOR<Prisma.TripUpdateWithoutBudgetsInput, Prisma.TripUncheckedUpdateWithoutBudgetsInput>
-}
-
-export type TripUpdateWithoutBudgetsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalBudget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  expenses?: Prisma.ExpenseUpdateManyWithoutTripNestedInput
-  itineraries?: Prisma.ItineraryUpdateManyWithoutTripNestedInput
-  members?: Prisma.TripMemberUpdateManyWithoutTripNestedInput
-  celebrates?: Prisma.CelebrateUpdateManyWithoutTripNestedInput
-}
-
-export type TripUncheckedUpdateWithoutBudgetsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalBudget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutTripNestedInput
   itineraries?: Prisma.ItineraryUncheckedUpdateManyWithoutTripNestedInput
   members?: Prisma.TripMemberUncheckedUpdateManyWithoutTripNestedInput
   celebrates?: Prisma.CelebrateUncheckedUpdateManyWithoutTripNestedInput
@@ -816,7 +707,6 @@ export type TripCreateWithoutItinerariesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: string | null
-  budgets?: Prisma.BudgetCreateNestedManyWithoutTripInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutTripInput
   members?: Prisma.TripMemberCreateNestedManyWithoutTripInput
   celebrates?: Prisma.CelebrateCreateNestedManyWithoutTripInput
@@ -832,7 +722,6 @@ export type TripUncheckedCreateWithoutItinerariesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: string | null
-  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutTripInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutTripInput
   members?: Prisma.TripMemberUncheckedCreateNestedManyWithoutTripInput
   celebrates?: Prisma.CelebrateUncheckedCreateNestedManyWithoutTripInput
@@ -864,7 +753,6 @@ export type TripUpdateWithoutItinerariesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budgets?: Prisma.BudgetUpdateManyWithoutTripNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutTripNestedInput
   members?: Prisma.TripMemberUpdateManyWithoutTripNestedInput
   celebrates?: Prisma.CelebrateUpdateManyWithoutTripNestedInput
@@ -880,7 +768,6 @@ export type TripUncheckedUpdateWithoutItinerariesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutTripNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutTripNestedInput
   members?: Prisma.TripMemberUncheckedUpdateManyWithoutTripNestedInput
   celebrates?: Prisma.CelebrateUncheckedUpdateManyWithoutTripNestedInput
@@ -896,7 +783,6 @@ export type TripCreateWithoutCelebratesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: string | null
-  budgets?: Prisma.BudgetCreateNestedManyWithoutTripInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutTripInput
   itineraries?: Prisma.ItineraryCreateNestedManyWithoutTripInput
   members?: Prisma.TripMemberCreateNestedManyWithoutTripInput
@@ -912,7 +798,6 @@ export type TripUncheckedCreateWithoutCelebratesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: string | null
-  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutTripInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutTripInput
   itineraries?: Prisma.ItineraryUncheckedCreateNestedManyWithoutTripInput
   members?: Prisma.TripMemberUncheckedCreateNestedManyWithoutTripInput
@@ -944,7 +829,6 @@ export type TripUpdateWithoutCelebratesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budgets?: Prisma.BudgetUpdateManyWithoutTripNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutTripNestedInput
   itineraries?: Prisma.ItineraryUpdateManyWithoutTripNestedInput
   members?: Prisma.TripMemberUpdateManyWithoutTripNestedInput
@@ -960,7 +844,6 @@ export type TripUncheckedUpdateWithoutCelebratesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutTripNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutTripNestedInput
   itineraries?: Prisma.ItineraryUncheckedUpdateManyWithoutTripNestedInput
   members?: Prisma.TripMemberUncheckedUpdateManyWithoutTripNestedInput
@@ -972,7 +855,6 @@ export type TripUncheckedUpdateWithoutCelebratesInput = {
  */
 
 export type TripCountOutputType = {
-  budgets: number
   expenses: number
   itineraries: number
   members: number
@@ -980,7 +862,6 @@ export type TripCountOutputType = {
 }
 
 export type TripCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  budgets?: boolean | TripCountOutputTypeCountBudgetsArgs
   expenses?: boolean | TripCountOutputTypeCountExpensesArgs
   itineraries?: boolean | TripCountOutputTypeCountItinerariesArgs
   members?: boolean | TripCountOutputTypeCountMembersArgs
@@ -995,13 +876,6 @@ export type TripCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the TripCountOutputType
    */
   select?: Prisma.TripCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * TripCountOutputType without action
- */
-export type TripCountOutputTypeCountBudgetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.BudgetWhereInput
 }
 
 /**
@@ -1043,7 +917,6 @@ export type TripSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   images?: boolean
-  budgets?: boolean | Prisma.Trip$budgetsArgs<ExtArgs>
   expenses?: boolean | Prisma.Trip$expensesArgs<ExtArgs>
   itineraries?: boolean | Prisma.Trip$itinerariesArgs<ExtArgs>
   members?: boolean | Prisma.Trip$membersArgs<ExtArgs>
@@ -1067,7 +940,6 @@ export type TripSelectScalar = {
 
 export type TripOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "startDate" | "endDate" | "totalBudget" | "status" | "createdAt" | "updatedAt" | "images", ExtArgs["result"]["trip"]>
 export type TripInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  budgets?: boolean | Prisma.Trip$budgetsArgs<ExtArgs>
   expenses?: boolean | Prisma.Trip$expensesArgs<ExtArgs>
   itineraries?: boolean | Prisma.Trip$itinerariesArgs<ExtArgs>
   members?: boolean | Prisma.Trip$membersArgs<ExtArgs>
@@ -1078,7 +950,6 @@ export type TripInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type $TripPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Trip"
   objects: {
-    budgets: Prisma.$BudgetPayload<ExtArgs>[]
     expenses: Prisma.$ExpensePayload<ExtArgs>[]
     itineraries: Prisma.$ItineraryPayload<ExtArgs>[]
     members: Prisma.$TripMemberPayload<ExtArgs>[]
@@ -1434,7 +1305,6 @@ readonly fields: TripFieldRefs;
  */
 export interface Prisma__TripClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  budgets<T extends Prisma.Trip$budgetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Trip$budgetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   expenses<T extends Prisma.Trip$expensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Trip$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   itineraries<T extends Prisma.Trip$itinerariesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Trip$itinerariesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ItineraryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   members<T extends Prisma.Trip$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Trip$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TripMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1817,30 +1687,6 @@ export type TripDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Trips to delete.
    */
   limit?: number
-}
-
-/**
- * Trip.budgets
- */
-export type Trip$budgetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Budget
-   */
-  select?: Prisma.BudgetSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Budget
-   */
-  omit?: Prisma.BudgetOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.BudgetInclude<ExtArgs> | null
-  where?: Prisma.BudgetWhereInput
-  orderBy?: Prisma.BudgetOrderByWithRelationInput | Prisma.BudgetOrderByWithRelationInput[]
-  cursor?: Prisma.BudgetWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.BudgetScalarFieldEnum | Prisma.BudgetScalarFieldEnum[]
 }
 
 /**

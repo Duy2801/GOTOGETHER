@@ -26,6 +26,8 @@ export type ExpenseSplitMinAggregateOutputType = {
     splitType: $Enums.SplitType | null;
     isPaid: boolean | null;
     paidAt: Date | null;
+    confirmed: boolean | null;
+    confirmedAt: Date | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -38,6 +40,8 @@ export type ExpenseSplitMaxAggregateOutputType = {
     splitType: $Enums.SplitType | null;
     isPaid: boolean | null;
     paidAt: Date | null;
+    confirmed: boolean | null;
+    confirmedAt: Date | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -50,6 +54,8 @@ export type ExpenseSplitCountAggregateOutputType = {
     splitType: number;
     isPaid: number;
     paidAt: number;
+    confirmed: number;
+    confirmedAt: number;
     createdAt: number;
     updatedAt: number;
     _all: number;
@@ -71,6 +77,8 @@ export type ExpenseSplitMinAggregateInputType = {
     splitType?: true;
     isPaid?: true;
     paidAt?: true;
+    confirmed?: true;
+    confirmedAt?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -83,6 +91,8 @@ export type ExpenseSplitMaxAggregateInputType = {
     splitType?: true;
     isPaid?: true;
     paidAt?: true;
+    confirmed?: true;
+    confirmedAt?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -95,6 +105,8 @@ export type ExpenseSplitCountAggregateInputType = {
     splitType?: true;
     isPaid?: true;
     paidAt?: true;
+    confirmed?: true;
+    confirmedAt?: true;
     createdAt?: true;
     updatedAt?: true;
     _all?: true;
@@ -136,6 +148,8 @@ export type ExpenseSplitGroupByOutputType = {
     splitType: $Enums.SplitType;
     isPaid: boolean;
     paidAt: Date | null;
+    confirmed: boolean;
+    confirmedAt: Date | null;
     createdAt: Date;
     updatedAt: Date;
     _count: ExpenseSplitCountAggregateOutputType | null;
@@ -159,6 +173,8 @@ export type ExpenseSplitWhereInput = {
     splitType?: Prisma.EnumSplitTypeFilter<"ExpenseSplit"> | $Enums.SplitType;
     isPaid?: Prisma.BoolFilter<"ExpenseSplit"> | boolean;
     paidAt?: Prisma.DateTimeNullableFilter<"ExpenseSplit"> | Date | string | null;
+    confirmed?: Prisma.BoolFilter<"ExpenseSplit"> | boolean;
+    confirmedAt?: Prisma.DateTimeNullableFilter<"ExpenseSplit"> | Date | string | null;
     createdAt?: Prisma.DateTimeFilter<"ExpenseSplit"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"ExpenseSplit"> | Date | string;
     expense?: Prisma.XOR<Prisma.ExpenseScalarRelationFilter, Prisma.ExpenseWhereInput>;
@@ -173,6 +189,8 @@ export type ExpenseSplitOrderByWithRelationInput = {
     splitType?: Prisma.SortOrder;
     isPaid?: Prisma.SortOrder;
     paidAt?: Prisma.SortOrderInput | Prisma.SortOrder;
+    confirmed?: Prisma.SortOrder;
+    confirmedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     expense?: Prisma.ExpenseOrderByWithRelationInput;
@@ -192,6 +210,8 @@ export type ExpenseSplitWhereUniqueInput = Prisma.AtLeast<{
     splitType?: Prisma.EnumSplitTypeFilter<"ExpenseSplit"> | $Enums.SplitType;
     isPaid?: Prisma.BoolFilter<"ExpenseSplit"> | boolean;
     paidAt?: Prisma.DateTimeNullableFilter<"ExpenseSplit"> | Date | string | null;
+    confirmed?: Prisma.BoolFilter<"ExpenseSplit"> | boolean;
+    confirmedAt?: Prisma.DateTimeNullableFilter<"ExpenseSplit"> | Date | string | null;
     createdAt?: Prisma.DateTimeFilter<"ExpenseSplit"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"ExpenseSplit"> | Date | string;
     expense?: Prisma.XOR<Prisma.ExpenseScalarRelationFilter, Prisma.ExpenseWhereInput>;
@@ -206,6 +226,8 @@ export type ExpenseSplitOrderByWithAggregationInput = {
     splitType?: Prisma.SortOrder;
     isPaid?: Prisma.SortOrder;
     paidAt?: Prisma.SortOrderInput | Prisma.SortOrder;
+    confirmed?: Prisma.SortOrder;
+    confirmedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     _count?: Prisma.ExpenseSplitCountOrderByAggregateInput;
@@ -226,6 +248,8 @@ export type ExpenseSplitScalarWhereWithAggregatesInput = {
     splitType?: Prisma.EnumSplitTypeWithAggregatesFilter<"ExpenseSplit"> | $Enums.SplitType;
     isPaid?: Prisma.BoolWithAggregatesFilter<"ExpenseSplit"> | boolean;
     paidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ExpenseSplit"> | Date | string | null;
+    confirmed?: Prisma.BoolWithAggregatesFilter<"ExpenseSplit"> | boolean;
+    confirmedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ExpenseSplit"> | Date | string | null;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"ExpenseSplit"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ExpenseSplit"> | Date | string;
 };
@@ -236,6 +260,8 @@ export type ExpenseSplitCreateInput = {
     splitType?: $Enums.SplitType;
     isPaid?: boolean;
     paidAt?: Date | string | null;
+    confirmed?: boolean;
+    confirmedAt?: Date | string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     expense: Prisma.ExpenseCreateNestedOneWithoutSplitsInput;
@@ -250,6 +276,8 @@ export type ExpenseSplitUncheckedCreateInput = {
     splitType?: $Enums.SplitType;
     isPaid?: boolean;
     paidAt?: Date | string | null;
+    confirmed?: boolean;
+    confirmedAt?: Date | string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -260,6 +288,8 @@ export type ExpenseSplitUpdateInput = {
     splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
     isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     expense?: Prisma.ExpenseUpdateOneRequiredWithoutSplitsNestedInput;
@@ -274,6 +304,8 @@ export type ExpenseSplitUncheckedUpdateInput = {
     splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
     isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -286,6 +318,8 @@ export type ExpenseSplitCreateManyInput = {
     splitType?: $Enums.SplitType;
     isPaid?: boolean;
     paidAt?: Date | string | null;
+    confirmed?: boolean;
+    confirmedAt?: Date | string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -296,6 +330,8 @@ export type ExpenseSplitUpdateManyMutationInput = {
     splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
     isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -308,6 +344,8 @@ export type ExpenseSplitUncheckedUpdateManyInput = {
     splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
     isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -337,6 +375,8 @@ export type ExpenseSplitCountOrderByAggregateInput = {
     splitType?: Prisma.SortOrder;
     isPaid?: Prisma.SortOrder;
     paidAt?: Prisma.SortOrder;
+    confirmed?: Prisma.SortOrder;
+    confirmedAt?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -353,6 +393,8 @@ export type ExpenseSplitMaxOrderByAggregateInput = {
     splitType?: Prisma.SortOrder;
     isPaid?: Prisma.SortOrder;
     paidAt?: Prisma.SortOrder;
+    confirmed?: Prisma.SortOrder;
+    confirmedAt?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -365,6 +407,8 @@ export type ExpenseSplitMinOrderByAggregateInput = {
     splitType?: Prisma.SortOrder;
     isPaid?: Prisma.SortOrder;
     paidAt?: Prisma.SortOrder;
+    confirmed?: Prisma.SortOrder;
+    confirmedAt?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -458,6 +502,8 @@ export type ExpenseSplitCreateWithoutUserInput = {
     splitType?: $Enums.SplitType;
     isPaid?: boolean;
     paidAt?: Date | string | null;
+    confirmed?: boolean;
+    confirmedAt?: Date | string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     expense: Prisma.ExpenseCreateNestedOneWithoutSplitsInput;
@@ -470,6 +516,8 @@ export type ExpenseSplitUncheckedCreateWithoutUserInput = {
     splitType?: $Enums.SplitType;
     isPaid?: boolean;
     paidAt?: Date | string | null;
+    confirmed?: boolean;
+    confirmedAt?: Date | string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -506,6 +554,8 @@ export type ExpenseSplitScalarWhereInput = {
     splitType?: Prisma.EnumSplitTypeFilter<"ExpenseSplit"> | $Enums.SplitType;
     isPaid?: Prisma.BoolFilter<"ExpenseSplit"> | boolean;
     paidAt?: Prisma.DateTimeNullableFilter<"ExpenseSplit"> | Date | string | null;
+    confirmed?: Prisma.BoolFilter<"ExpenseSplit"> | boolean;
+    confirmedAt?: Prisma.DateTimeNullableFilter<"ExpenseSplit"> | Date | string | null;
     createdAt?: Prisma.DateTimeFilter<"ExpenseSplit"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"ExpenseSplit"> | Date | string;
 };
@@ -516,6 +566,8 @@ export type ExpenseSplitCreateWithoutExpenseInput = {
     splitType?: $Enums.SplitType;
     isPaid?: boolean;
     paidAt?: Date | string | null;
+    confirmed?: boolean;
+    confirmedAt?: Date | string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     user: Prisma.UserCreateNestedOneWithoutExpenseSplitsInput;
@@ -528,6 +580,8 @@ export type ExpenseSplitUncheckedCreateWithoutExpenseInput = {
     splitType?: $Enums.SplitType;
     isPaid?: boolean;
     paidAt?: Date | string | null;
+    confirmed?: boolean;
+    confirmedAt?: Date | string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -560,6 +614,8 @@ export type ExpenseSplitCreateManyUserInput = {
     splitType?: $Enums.SplitType;
     isPaid?: boolean;
     paidAt?: Date | string | null;
+    confirmed?: boolean;
+    confirmedAt?: Date | string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -570,6 +626,8 @@ export type ExpenseSplitUpdateWithoutUserInput = {
     splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
     isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     expense?: Prisma.ExpenseUpdateOneRequiredWithoutSplitsNestedInput;
@@ -582,6 +640,8 @@ export type ExpenseSplitUncheckedUpdateWithoutUserInput = {
     splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
     isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -593,6 +653,8 @@ export type ExpenseSplitUncheckedUpdateManyWithoutUserInput = {
     splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
     isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -604,6 +666,8 @@ export type ExpenseSplitCreateManyExpenseInput = {
     splitType?: $Enums.SplitType;
     isPaid?: boolean;
     paidAt?: Date | string | null;
+    confirmed?: boolean;
+    confirmedAt?: Date | string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -614,6 +678,8 @@ export type ExpenseSplitUpdateWithoutExpenseInput = {
     splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
     isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     user?: Prisma.UserUpdateOneRequiredWithoutExpenseSplitsNestedInput;
@@ -626,6 +692,8 @@ export type ExpenseSplitUncheckedUpdateWithoutExpenseInput = {
     splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
     isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -637,6 +705,8 @@ export type ExpenseSplitUncheckedUpdateManyWithoutExpenseInput = {
     splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
     isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -649,6 +719,8 @@ export type ExpenseSplitSelect<ExtArgs extends runtime.Types.Extensions.Internal
     splitType?: boolean;
     isPaid?: boolean;
     paidAt?: boolean;
+    confirmed?: boolean;
+    confirmedAt?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     expense?: boolean | Prisma.ExpenseDefaultArgs<ExtArgs>;
@@ -663,10 +735,12 @@ export type ExpenseSplitSelectScalar = {
     splitType?: boolean;
     isPaid?: boolean;
     paidAt?: boolean;
+    confirmed?: boolean;
+    confirmedAt?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 };
-export type ExpenseSplitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "expenseId" | "userId" | "amount" | "percentage" | "splitType" | "isPaid" | "paidAt" | "createdAt" | "updatedAt", ExtArgs["result"]["expenseSplit"]>;
+export type ExpenseSplitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "expenseId" | "userId" | "amount" | "percentage" | "splitType" | "isPaid" | "paidAt" | "confirmed" | "confirmedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["expenseSplit"]>;
 export type ExpenseSplitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     expense?: boolean | Prisma.ExpenseDefaultArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -686,6 +760,8 @@ export type $ExpenseSplitPayload<ExtArgs extends runtime.Types.Extensions.Intern
         splitType: $Enums.SplitType;
         isPaid: boolean;
         paidAt: Date | null;
+        confirmed: boolean;
+        confirmedAt: Date | null;
         createdAt: Date;
         updatedAt: Date;
     }, ExtArgs["result"]["expenseSplit"]>;
@@ -753,6 +829,8 @@ export interface ExpenseSplitFieldRefs {
     readonly splitType: Prisma.FieldRef<"ExpenseSplit", 'SplitType'>;
     readonly isPaid: Prisma.FieldRef<"ExpenseSplit", 'Boolean'>;
     readonly paidAt: Prisma.FieldRef<"ExpenseSplit", 'DateTime'>;
+    readonly confirmed: Prisma.FieldRef<"ExpenseSplit", 'Boolean'>;
+    readonly confirmedAt: Prisma.FieldRef<"ExpenseSplit", 'DateTime'>;
     readonly createdAt: Prisma.FieldRef<"ExpenseSplit", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"ExpenseSplit", 'DateTime'>;
 }

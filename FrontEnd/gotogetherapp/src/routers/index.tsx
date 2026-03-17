@@ -11,6 +11,7 @@ import RegisterScreen from '../features/auth/register/RegisterScreen';
 import UpdateInfoScreen from '../features/profile/UpdateInfoScreen';
 import TabNavigator from './Tabs';
 import SpendingScreen from '../features/spending/SpedingScreen';
+import PaymentDetailScreen from '../features/spending/PaymentDetailScreen';
 import SettingScreen from '../features/setting/SettingScreen';
 import CelebrateScreen from '../features/celebrate/CelebrateScreen';
 import { TripDetailScreen, AddExpenseScreen } from '../features/tripdetail';
@@ -30,6 +31,7 @@ function ApplicationNavigator() {
     { name: SCREEN_NAME.CELEBRATE, component: CelebrateScreen },
     { name: SCREEN_NAME.SETTING, component: SettingScreen },
     { name: SCREEN_NAME.SPENDING, component: SpendingScreen },
+    { name: SCREEN_NAME.PAYMENT_DETAIL, component: PaymentDetailScreen },
     { name: SCREEN_NAME.TRIP_DETAIL, component: TripDetailScreen },
     {
       name: SCREEN_NAME.ADD_EXPENSE,

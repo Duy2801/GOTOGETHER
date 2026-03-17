@@ -180,6 +180,7 @@ export type UserWhereInput = {
     tripMembers?: Prisma.TripMemberListRelationFilter;
     userRoles?: Prisma.UserRoleListRelationFilter;
     celebrates?: Prisma.CelebrateListRelationFilter;
+    budgets?: Prisma.BudgetListRelationFilter;
 };
 export type UserOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
@@ -201,6 +202,7 @@ export type UserOrderByWithRelationInput = {
     tripMembers?: Prisma.TripMemberOrderByRelationAggregateInput;
     userRoles?: Prisma.UserRoleOrderByRelationAggregateInput;
     celebrates?: Prisma.CelebrateOrderByRelationAggregateInput;
+    budgets?: Prisma.BudgetOrderByRelationAggregateInput;
     _relevance?: Prisma.UserOrderByRelevanceInput;
 };
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -226,6 +228,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
     tripMembers?: Prisma.TripMemberListRelationFilter;
     userRoles?: Prisma.UserRoleListRelationFilter;
     celebrates?: Prisma.CelebrateListRelationFilter;
+    budgets?: Prisma.BudgetListRelationFilter;
 }, "id" | "email" | "googleId">;
 export type UserOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
@@ -283,6 +286,7 @@ export type UserCreateInput = {
     tripMembers?: Prisma.TripMemberCreateNestedManyWithoutUserInput;
     userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput;
     celebrates?: Prisma.CelebrateCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput;
 };
 export type UserUncheckedCreateInput = {
     id?: string;
@@ -304,6 +308,7 @@ export type UserUncheckedCreateInput = {
     tripMembers?: Prisma.TripMemberUncheckedCreateNestedManyWithoutUserInput;
     userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput;
     celebrates?: Prisma.CelebrateUncheckedCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -325,6 +330,7 @@ export type UserUpdateInput = {
     tripMembers?: Prisma.TripMemberUpdateManyWithoutUserNestedInput;
     userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput;
     celebrates?: Prisma.CelebrateUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -346,6 +352,7 @@ export type UserUncheckedUpdateInput = {
     tripMembers?: Prisma.TripMemberUncheckedUpdateManyWithoutUserNestedInput;
     userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput;
     celebrates?: Prisma.CelebrateUncheckedUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateManyInput = {
     id?: string;
@@ -519,6 +526,18 @@ export type UserUpdateOneRequiredWithoutExpenseSplitsNestedInput = {
     connect?: Prisma.UserWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutExpenseSplitsInput, Prisma.UserUpdateWithoutExpenseSplitsInput>, Prisma.UserUncheckedUpdateWithoutExpenseSplitsInput>;
 };
+export type UserCreateNestedOneWithoutBudgetsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutBudgetsInput, Prisma.UserUncheckedCreateWithoutBudgetsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutBudgetsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutBudgetsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutBudgetsInput, Prisma.UserUncheckedCreateWithoutBudgetsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutBudgetsInput;
+    upsert?: Prisma.UserUpsertWithoutBudgetsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBudgetsInput, Prisma.UserUpdateWithoutBudgetsInput>, Prisma.UserUncheckedUpdateWithoutBudgetsInput>;
+};
 export type UserCreateNestedOneWithoutNotificationsInput = {
     create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>;
     connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput;
@@ -574,6 +593,7 @@ export type UserCreateWithoutUserRolesInput = {
     notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     tripMembers?: Prisma.TripMemberCreateNestedManyWithoutUserInput;
     celebrates?: Prisma.CelebrateCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput;
 };
 export type UserUncheckedCreateWithoutUserRolesInput = {
     id?: string;
@@ -594,6 +614,7 @@ export type UserUncheckedCreateWithoutUserRolesInput = {
     notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     tripMembers?: Prisma.TripMemberUncheckedCreateNestedManyWithoutUserInput;
     celebrates?: Prisma.CelebrateUncheckedCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutUserRolesInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -627,6 +648,7 @@ export type UserUpdateWithoutUserRolesInput = {
     notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     tripMembers?: Prisma.TripMemberUpdateManyWithoutUserNestedInput;
     celebrates?: Prisma.CelebrateUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateWithoutUserRolesInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -647,6 +669,7 @@ export type UserUncheckedUpdateWithoutUserRolesInput = {
     notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     tripMembers?: Prisma.TripMemberUncheckedUpdateManyWithoutUserNestedInput;
     celebrates?: Prisma.CelebrateUncheckedUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutTripMembersInput = {
     id?: string;
@@ -667,6 +690,7 @@ export type UserCreateWithoutTripMembersInput = {
     notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput;
     celebrates?: Prisma.CelebrateCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput;
 };
 export type UserUncheckedCreateWithoutTripMembersInput = {
     id?: string;
@@ -687,6 +711,7 @@ export type UserUncheckedCreateWithoutTripMembersInput = {
     notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput;
     celebrates?: Prisma.CelebrateUncheckedCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutTripMembersInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -720,6 +745,7 @@ export type UserUpdateWithoutTripMembersInput = {
     notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput;
     celebrates?: Prisma.CelebrateUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateWithoutTripMembersInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -740,6 +766,7 @@ export type UserUncheckedUpdateWithoutTripMembersInput = {
     notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput;
     celebrates?: Prisma.CelebrateUncheckedUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutExpensesInput = {
     id?: string;
@@ -760,6 +787,7 @@ export type UserCreateWithoutExpensesInput = {
     tripMembers?: Prisma.TripMemberCreateNestedManyWithoutUserInput;
     userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput;
     celebrates?: Prisma.CelebrateCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput;
 };
 export type UserUncheckedCreateWithoutExpensesInput = {
     id?: string;
@@ -780,6 +808,7 @@ export type UserUncheckedCreateWithoutExpensesInput = {
     tripMembers?: Prisma.TripMemberUncheckedCreateNestedManyWithoutUserInput;
     userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput;
     celebrates?: Prisma.CelebrateUncheckedCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutExpensesInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -813,6 +842,7 @@ export type UserUpdateWithoutExpensesInput = {
     tripMembers?: Prisma.TripMemberUpdateManyWithoutUserNestedInput;
     userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput;
     celebrates?: Prisma.CelebrateUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateWithoutExpensesInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -833,6 +863,7 @@ export type UserUncheckedUpdateWithoutExpensesInput = {
     tripMembers?: Prisma.TripMemberUncheckedUpdateManyWithoutUserNestedInput;
     userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput;
     celebrates?: Prisma.CelebrateUncheckedUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutExpenseSplitsInput = {
     id?: string;
@@ -853,6 +884,7 @@ export type UserCreateWithoutExpenseSplitsInput = {
     tripMembers?: Prisma.TripMemberCreateNestedManyWithoutUserInput;
     userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput;
     celebrates?: Prisma.CelebrateCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput;
 };
 export type UserUncheckedCreateWithoutExpenseSplitsInput = {
     id?: string;
@@ -873,6 +905,7 @@ export type UserUncheckedCreateWithoutExpenseSplitsInput = {
     tripMembers?: Prisma.TripMemberUncheckedCreateNestedManyWithoutUserInput;
     userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput;
     celebrates?: Prisma.CelebrateUncheckedCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutExpenseSplitsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -906,6 +939,7 @@ export type UserUpdateWithoutExpenseSplitsInput = {
     tripMembers?: Prisma.TripMemberUpdateManyWithoutUserNestedInput;
     userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput;
     celebrates?: Prisma.CelebrateUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateWithoutExpenseSplitsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -921,6 +955,104 @@ export type UserUncheckedUpdateWithoutExpenseSplitsInput = {
     googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput;
+    expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutPaidByNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+    tripMembers?: Prisma.TripMemberUncheckedUpdateManyWithoutUserNestedInput;
+    userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput;
+    celebrates?: Prisma.CelebrateUncheckedUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutBudgetsInput = {
+    id?: string;
+    email: string;
+    fullName?: string | null;
+    password?: string | null;
+    dateOfBirth?: Date | string | null;
+    gender?: number | null;
+    status?: $Enums.UserStatus;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    googleId?: string | null;
+    avatar?: string | null;
+    devices?: Prisma.DeviceCreateNestedManyWithoutUserInput;
+    expenseSplits?: Prisma.ExpenseSplitCreateNestedManyWithoutUserInput;
+    expenses?: Prisma.ExpenseCreateNestedManyWithoutPaidByInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+    tripMembers?: Prisma.TripMemberCreateNestedManyWithoutUserInput;
+    userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput;
+    celebrates?: Prisma.CelebrateCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutBudgetsInput = {
+    id?: string;
+    email: string;
+    fullName?: string | null;
+    password?: string | null;
+    dateOfBirth?: Date | string | null;
+    gender?: number | null;
+    status?: $Enums.UserStatus;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    googleId?: string | null;
+    avatar?: string | null;
+    devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput;
+    expenseSplits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutUserInput;
+    expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutPaidByInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+    tripMembers?: Prisma.TripMemberUncheckedCreateNestedManyWithoutUserInput;
+    userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput;
+    celebrates?: Prisma.CelebrateUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutBudgetsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutBudgetsInput, Prisma.UserUncheckedCreateWithoutBudgetsInput>;
+};
+export type UserUpsertWithoutBudgetsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutBudgetsInput, Prisma.UserUncheckedUpdateWithoutBudgetsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutBudgetsInput, Prisma.UserUncheckedCreateWithoutBudgetsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutBudgetsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutBudgetsInput, Prisma.UserUncheckedUpdateWithoutBudgetsInput>;
+};
+export type UserUpdateWithoutBudgetsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    gender?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput;
+    expenseSplits?: Prisma.ExpenseSplitUpdateManyWithoutUserNestedInput;
+    expenses?: Prisma.ExpenseUpdateManyWithoutPaidByNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+    tripMembers?: Prisma.TripMemberUpdateManyWithoutUserNestedInput;
+    userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput;
+    celebrates?: Prisma.CelebrateUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutBudgetsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    gender?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput;
+    expenseSplits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutUserNestedInput;
     expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutPaidByNestedInput;
     notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     tripMembers?: Prisma.TripMemberUncheckedUpdateManyWithoutUserNestedInput;
@@ -946,6 +1078,7 @@ export type UserCreateWithoutNotificationsInput = {
     tripMembers?: Prisma.TripMemberCreateNestedManyWithoutUserInput;
     userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput;
     celebrates?: Prisma.CelebrateCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput;
 };
 export type UserUncheckedCreateWithoutNotificationsInput = {
     id?: string;
@@ -966,6 +1099,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
     tripMembers?: Prisma.TripMemberUncheckedCreateNestedManyWithoutUserInput;
     userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput;
     celebrates?: Prisma.CelebrateUncheckedCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutNotificationsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -999,6 +1133,7 @@ export type UserUpdateWithoutNotificationsInput = {
     tripMembers?: Prisma.TripMemberUpdateManyWithoutUserNestedInput;
     userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput;
     celebrates?: Prisma.CelebrateUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateWithoutNotificationsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1019,6 +1154,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
     tripMembers?: Prisma.TripMemberUncheckedUpdateManyWithoutUserNestedInput;
     userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput;
     celebrates?: Prisma.CelebrateUncheckedUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutDevicesInput = {
     id?: string;
@@ -1039,6 +1175,7 @@ export type UserCreateWithoutDevicesInput = {
     tripMembers?: Prisma.TripMemberCreateNestedManyWithoutUserInput;
     userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput;
     celebrates?: Prisma.CelebrateCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput;
 };
 export type UserUncheckedCreateWithoutDevicesInput = {
     id?: string;
@@ -1059,6 +1196,7 @@ export type UserUncheckedCreateWithoutDevicesInput = {
     tripMembers?: Prisma.TripMemberUncheckedCreateNestedManyWithoutUserInput;
     userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput;
     celebrates?: Prisma.CelebrateUncheckedCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutDevicesInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -1092,6 +1230,7 @@ export type UserUpdateWithoutDevicesInput = {
     tripMembers?: Prisma.TripMemberUpdateManyWithoutUserNestedInput;
     userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput;
     celebrates?: Prisma.CelebrateUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateWithoutDevicesInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1112,6 +1251,7 @@ export type UserUncheckedUpdateWithoutDevicesInput = {
     tripMembers?: Prisma.TripMemberUncheckedUpdateManyWithoutUserNestedInput;
     userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput;
     celebrates?: Prisma.CelebrateUncheckedUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutCelebratesInput = {
     id?: string;
@@ -1132,6 +1272,7 @@ export type UserCreateWithoutCelebratesInput = {
     notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     tripMembers?: Prisma.TripMemberCreateNestedManyWithoutUserInput;
     userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput;
 };
 export type UserUncheckedCreateWithoutCelebratesInput = {
     id?: string;
@@ -1152,6 +1293,7 @@ export type UserUncheckedCreateWithoutCelebratesInput = {
     notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     tripMembers?: Prisma.TripMemberUncheckedCreateNestedManyWithoutUserInput;
     userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput;
+    budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutCelebratesInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -1185,6 +1327,7 @@ export type UserUpdateWithoutCelebratesInput = {
     notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     tripMembers?: Prisma.TripMemberUpdateManyWithoutUserNestedInput;
     userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateWithoutCelebratesInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1205,6 +1348,7 @@ export type UserUncheckedUpdateWithoutCelebratesInput = {
     notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     tripMembers?: Prisma.TripMemberUncheckedUpdateManyWithoutUserNestedInput;
     userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput;
+    budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCountOutputType = {
     devices: number;
@@ -1214,6 +1358,7 @@ export type UserCountOutputType = {
     tripMembers: number;
     userRoles: number;
     celebrates: number;
+    budgets: number;
 };
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     devices?: boolean | UserCountOutputTypeCountDevicesArgs;
@@ -1223,6 +1368,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
     tripMembers?: boolean | UserCountOutputTypeCountTripMembersArgs;
     userRoles?: boolean | UserCountOutputTypeCountUserRolesArgs;
     celebrates?: boolean | UserCountOutputTypeCountCelebratesArgs;
+    budgets?: boolean | UserCountOutputTypeCountBudgetsArgs;
 };
 export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null;
@@ -1248,6 +1394,9 @@ export type UserCountOutputTypeCountUserRolesArgs<ExtArgs extends runtime.Types.
 export type UserCountOutputTypeCountCelebratesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.CelebrateWhereInput;
 };
+export type UserCountOutputTypeCountBudgetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.BudgetWhereInput;
+};
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     email?: boolean;
@@ -1268,6 +1417,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     tripMembers?: boolean | Prisma.User$tripMembersArgs<ExtArgs>;
     userRoles?: boolean | Prisma.User$userRolesArgs<ExtArgs>;
     celebrates?: boolean | Prisma.User$celebratesArgs<ExtArgs>;
+    budgets?: boolean | Prisma.User$budgetsArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectScalar = {
@@ -1293,6 +1443,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     tripMembers?: boolean | Prisma.User$tripMembersArgs<ExtArgs>;
     userRoles?: boolean | Prisma.User$userRolesArgs<ExtArgs>;
     celebrates?: boolean | Prisma.User$celebratesArgs<ExtArgs>;
+    budgets?: boolean | Prisma.User$budgetsArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1305,6 +1456,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
         tripMembers: Prisma.$TripMemberPayload<ExtArgs>[];
         userRoles: Prisma.$UserRolePayload<ExtArgs>[];
         celebrates: Prisma.$CelebratePayload<ExtArgs>[];
+        budgets: Prisma.$BudgetPayload<ExtArgs>[];
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
@@ -1376,6 +1528,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
     tripMembers<T extends Prisma.User$tripMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tripMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TripMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     userRoles<T extends Prisma.User$userRolesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userRolesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     celebrates<T extends Prisma.User$celebratesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$celebratesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CelebratePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    budgets<T extends Prisma.User$budgetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$budgetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
     catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
     finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
@@ -1555,6 +1708,17 @@ export type User$celebratesArgs<ExtArgs extends runtime.Types.Extensions.Interna
     take?: number;
     skip?: number;
     distinct?: Prisma.CelebrateScalarFieldEnum | Prisma.CelebrateScalarFieldEnum[];
+};
+export type User$budgetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    select?: Prisma.BudgetSelect<ExtArgs> | null;
+    omit?: Prisma.BudgetOmit<ExtArgs> | null;
+    include?: Prisma.BudgetInclude<ExtArgs> | null;
+    where?: Prisma.BudgetWhereInput;
+    orderBy?: Prisma.BudgetOrderByWithRelationInput | Prisma.BudgetOrderByWithRelationInput[];
+    cursor?: Prisma.BudgetWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.BudgetScalarFieldEnum | Prisma.BudgetScalarFieldEnum[];
 };
 export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.UserSelect<ExtArgs> | null;
